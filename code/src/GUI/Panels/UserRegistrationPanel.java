@@ -1,5 +1,7 @@
 package GUI.Panels;
 
+import java.awt.event.ActionListener;
+
 /*
 
     COMP 2005 Group Project
@@ -9,6 +11,11 @@ package GUI.Panels;
 
 public class UserRegistrationPanel extends javax.swing.JPanel {
 
+    
+        public void addSigninListener(ActionListener ae) {
+        jbSignin.addActionListener(ae);
+    }
+    
     public UserRegistrationPanel() {
         initComponents();
     }
@@ -35,8 +42,10 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
         jbCreateAccount = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jtfPassword = new javax.swing.JPasswordField();
+        jbSignin = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("User Registration"));
+        setPreferredSize(new java.awt.Dimension(800, 300));
 
         jLabel1.setText("First Name");
 
@@ -53,6 +62,8 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
         jbCreateAccount.setText("Create Account");
 
         jLabel6.setText("Password");
+
+        jbSignin.setText("Sign In");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -72,18 +83,18 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfUsername)
+                            .addComponent(jtfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                             .addComponent(jtfEmail)
                             .addComponent(jtfBirthday)
                             .addComponent(jtfLastname)
                             .addComponent(jtfFirstname)
-                            .addComponent(jtfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addComponent(jtfPassword)))
+                    .addComponent(jbSignin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jtfFirstname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -107,9 +118,10 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jtfPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbCreateAccount)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbSignin))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -122,6 +134,7 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JButton jbCreateAccount;
+    private javax.swing.JButton jbSignin;
     private javax.swing.JTextField jtfBirthday;
     private javax.swing.JTextField jtfEmail;
     private javax.swing.JTextField jtfFirstname;

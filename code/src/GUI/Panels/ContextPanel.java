@@ -9,6 +9,9 @@ package GUI.Panels;
 
 public class ContextPanel extends javax.swing.JPanel {
 
+    public static final int ACTIVITY = 1;
+    public static final int DEVICES = 2;
+    
     public ContextPanel() {
         initComponents();
     }
@@ -47,4 +50,16 @@ public class ContextPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jlContextInfo;
     // End of variables declaration//GEN-END:variables
+
+    public void changeState(int statetype) {
+        switch(statetype) {
+            case ACTIVITY:
+                jlContextInfo.setText("<html><h2>Your Activity\n<h3>Here's what you have done\n<h3>Details and statistics are on the left");
+                break;
+            case DEVICES:
+                jlContextInfo.setText("<html><h2>Import data\n<h3>Choose a device among the supported choices\n<h3>Your activity will be imported.");
+                
+                
+        }
+    }
 }

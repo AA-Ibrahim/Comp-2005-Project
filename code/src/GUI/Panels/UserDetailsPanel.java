@@ -28,20 +28,29 @@ public class UserDetailsPanel extends javax.swing.JPanel {
         jbEditProfile = new javax.swing.JButton();
         jbLogout = new javax.swing.JButton();
         jbMyFriends = new javax.swing.JButton();
+        jbImportData = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("User Details"));
+        setPreferredSize(new java.awt.Dimension(600, 100));
 
-        jLabel7.setText("Dr. Adrian Fiech");
+        jLabel7.setText("not logged in");
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Resources/fiech.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/Resources/user.jpg"))); // NOI18N
 
         jbMyActivity.setText("My Activity");
+        jbMyActivity.setEnabled(false);
 
         jbEditProfile.setText("edit profile");
+        jbEditProfile.setEnabled(false);
 
         jbLogout.setText("logout");
+        jbLogout.setEnabled(false);
 
         jbMyFriends.setText("My Friends");
+        jbMyFriends.setEnabled(false);
+
+        jbImportData.setText("Import Data");
+        jbImportData.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -56,10 +65,12 @@ public class UserDetailsPanel extends javax.swing.JPanel {
                         .addComponent(jbEditProfile)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jbLogout)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbMyFriends, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbImportData, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbMyFriends, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbMyActivity, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addComponent(jbMyActivity, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -68,15 +79,14 @@ public class UserDetailsPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbEditProfile)
-                        .addComponent(jbLogout))
+                        .addComponent(jbLogout)
+                        .addComponent(jbMyFriends)
+                        .addComponent(jbMyActivity)
+                        .addComponent(jbImportData))
                     .addComponent(jLabel10))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbMyFriends)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbMyActivity)
+                .addComponent(jLabel7)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -86,6 +96,7 @@ public class UserDetailsPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton jbEditProfile;
+    private javax.swing.JButton jbImportData;
     private javax.swing.JButton jbLogout;
     private javax.swing.JButton jbMyActivity;
     private javax.swing.JButton jbMyFriends;

@@ -1,5 +1,7 @@
 package GUI.Panels;
 
+import java.awt.event.ActionListener;
+
 /*
 
     COMP 2005 Group Project
@@ -9,6 +11,14 @@ package GUI.Panels;
 
 public class UserLoginPanel extends javax.swing.JPanel {
 
+    public void addCreateAccountListener(ActionListener ae) {
+        jbCreateAccount.addActionListener(ae);
+    }
+    
+    public void addSignInListener(ActionListener ae) {
+        jbSignin.addActionListener(ae);
+    }
+    
     public UserLoginPanel() {
         initComponents();
     }
@@ -27,8 +37,10 @@ public class UserLoginPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         jbSignin = new javax.swing.JButton();
         jpwPassword = new javax.swing.JPasswordField();
+        jbCreateAccount = new javax.swing.JButton();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder("User Login"));
+        setPreferredSize(new java.awt.Dimension(800, 300));
 
         jLabel7.setText("Username");
 
@@ -36,23 +48,26 @@ public class UserLoginPanel extends javax.swing.JPanel {
 
         jbSignin.setText("Sign In");
 
+        jbCreateAccount.setText("Create Account");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbSignin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jbCreateAccount, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbSignin, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))
-                        .addGap(18, 93, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtfUsername)
-                            .addComponent(jpwPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
-                .addContainerGap())
+                            .addComponent(jpwPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 322, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,8 +80,10 @@ public class UserLoginPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jpwPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
                 .addComponent(jbSignin)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbCreateAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -75,6 +92,7 @@ public class UserLoginPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JButton jbCreateAccount;
     private javax.swing.JButton jbSignin;
     private javax.swing.JPasswordField jpwPassword;
     private javax.swing.JTextField jtfUsername;
