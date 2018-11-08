@@ -28,14 +28,13 @@ public class ActivityTrackerGUI extends JFrame {
     MyDevicesPanel myDevices;
     ActivityData activityData;
 
-
-
     ActivityTrackerGUI() {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initializePanels();
         initializePanelListeners();
         changeToSigninLayout();
+        
     }
     
     private void initializePanels() {
