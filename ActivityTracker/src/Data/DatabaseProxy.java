@@ -93,10 +93,9 @@ public class DatabaseProxy {
 			return;
 		}
 
-		// Create a user table
+		// Create a table
 		try {
 			statement = connection.createStatement();
-			
 			statement.executeUpdate(query);
 			statement.close();
 			statement = null;
@@ -111,6 +110,20 @@ public class DatabaseProxy {
 	}
 	
 	// TODO: Change to a constant string
+	// NOTE: ROWID is an implicit primary key. You must ask for it specifically in the select command.
+	
+	//	sqlite> insert into USER VALUES("henrique_clone", "dosp", "henrique", "password1", "dsakkdlsaklkdsa");
+	//	sqlite> select rowid,* from user;
+	
+	//	1|henrique|dosp|henrique|password1|dsakkdlsaklkdsa
+	//	2|henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
+	
+	// VS...
+	
+	//	sqlite> select * from user;
+	//	henrique|dosp|henrique|password1|dsakkdlsaklkdsa
+	//	henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
+
 	String userTableCreationString() {
 		return
 			"CREATE TABLE IF NOT EXISTS USER  ("
