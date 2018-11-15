@@ -102,6 +102,6 @@ public class UserLoginPanel extends javax.swing.JPanel {
 	}
 
 	public String getPassword() {
-		return jpwPassword.getPassword().toString();
+		return String.valueOf(jpwPassword.getPassword());
 	}
 }

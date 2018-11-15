@@ -12,8 +12,13 @@ import java.awt.event.ActionListener;
 public class UserRegistrationPanel extends javax.swing.JPanel {
 
     
-        public void addSigninListener(ActionListener ae) {
+    public void addSigninListener(ActionListener ae) {
         jbSignin.addActionListener(ae);
+    }
+    
+    
+    public void addCreateAccountListener(ActionListener ae) {
+    	jbCreateAccount.addActionListener(ae);
     }
     
     public UserRegistrationPanel() {
@@ -142,10 +147,33 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
     private javax.swing.JPasswordField jtfPassword;
     private javax.swing.JTextField jtfUsername;
     // End of variables declaration//GEN-END:variables
-	public void clearFields() {
+	
+    public void clearFields() {
 		// TODO Auto-generated method stub
 		jtfUsername.setText("");
-		jtfPassword.setText("");
-		
+		jtfPassword.setText("");	
+	}
+
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return jtfUsername.getText();
+	}
+
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		System.out.println("pw is " + jtfPassword.getPassword().hashCode());
+		return String.valueOf(jtfPassword.getPassword());
+	}
+
+
+	public String getFirstName() {
+		// TODO Auto-generated method stub
+		return jtfFirstname.getText();
+	}
+
+
+	public String getLastName() {
+		// TODO Auto-generated method stub
+		return jtfLastname.getText();
 	}
 }

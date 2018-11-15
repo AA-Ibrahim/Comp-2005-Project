@@ -81,12 +81,16 @@ public class User implements DBHandler {
 		//ByteArrayOutputStream os = new ByteArrayOutputStream();
 		//ImageIO.write(image, "png", os);
 		//String encodedImage = new String(Base64.getEncoder().encodeToString(os))
+		String encodedImage = "null";
+		byte[] b = encodedImage.getBytes();
 		String query = "INSERT INTO USER VALUES("
 				+ this.firstName + ", "
 				+ this.lastName + ", "
 				+ this.username + ", "
 				+ this.password + ", "
-				+ encodedImage + ");";
+				+ "null" + ");";
+		System.out.println(query);
+		
 		m.executeQuery(query);
 		
 		return false;
