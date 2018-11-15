@@ -85,7 +85,7 @@ public class DatabaseProxy {
 	/**
 	 * Creates a table
 	 */
-	void createTable(String query) {
+	void executeQuery(String query) {
 
 		// Make sure that the database is open
 		if (connection == null) {
@@ -159,8 +159,8 @@ public class DatabaseProxy {
 		DatabaseProxy databaseProxy = new DatabaseProxy("test2.db");
 		databaseProxy.close();
 		databaseProxy.connect("test2.db");
-		databaseProxy.createTable(databaseProxy.userTableCreationString());
-		databaseProxy.createTable(databaseProxy.activityTableCreationString());
+		databaseProxy.executeQuery(databaseProxy.userTableCreationString());
+		databaseProxy.executeQuery(databaseProxy.activityTableCreationString());
 		databaseProxy.close();
 	}
 }

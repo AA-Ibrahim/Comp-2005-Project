@@ -23,7 +23,7 @@ public class User implements DBHandler {
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.image = image;
+		//this.image = null;
 		isValid = this.validate();
 	}
 	
@@ -63,9 +63,10 @@ public class User implements DBHandler {
 		
 		// Ugly hack to store image into a string
 		// DOESNT WORK, FIX LATER
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", os);
-		String encodedImage = new String(Base64.getEncoder().encodeToString(os))
+		//ByteArrayOutputStream os = new ByteArrayOutputStream();
+		//ImageIO.write(image, "png", os);
+		//String encodedImage = new String(Base64.getEncoder().encodeToString(os))
+		String encodedImage = "no";
 		String query = "INSERT INTO USER VALUES("
 				+ this.firstName + ", "
 				+ this.lastName + ", "
