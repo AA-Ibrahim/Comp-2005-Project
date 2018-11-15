@@ -74,6 +74,8 @@ public class ActivityTrackerGUI extends JFrame {
             
         });
         userRegistration.addSigninListener(ae -> {
+        	//TODO: Create User Object
+        	//TODO: Execute Query
             changeToSigninLayout();
         });
     }

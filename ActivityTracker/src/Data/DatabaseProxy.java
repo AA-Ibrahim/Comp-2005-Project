@@ -28,7 +28,22 @@ public class DatabaseProxy {
 		connection = null;
 		statement = null;
 	}
+	
+	private static final String CREATE_USER_TABLE_QUERY = 
+			"CREATE TABLE IF NOT EXISTS USER  ("
+			+ " firstName	TEXT NOT NULL, "
+			+ " lastName    TEXT NOT NULL,"
+			+ " username    TEXT NOT NULL,"
+			+ " password	TEXT NOT NULL,"
+			+ " image		BLOB" + ");";
 
+	private static final String CREATE_ACTIVITY_TABLE_QUERY =
+			"CREATE TABLE IF NOT EXISTS ACTIVITY  ("
+					+ " userId		INTEGER, "
+					+ " time		INTEGER,"
+					+ " distance	REAL,"
+					+ " altitude	REAL"
+					+ ");";
 	/**
 	 * This constructor creates this object, and connects to a database specified by
 	 * a particular filename. This constructor is simply an overloaded version of
@@ -41,6 +56,8 @@ public class DatabaseProxy {
 		this();
 		this.databaseFileName = fname;
 		connect(fname);
+		this.executeQuery(CREATE_USER_TABLE_QUERY);
+		this.executeQuery(CREATE_ACTIVITY_TABLE_QUERY);
 	}
 
 	/**
@@ -106,7 +123,7 @@ public class DatabaseProxy {
 		}
 
 		// Let the user know it happened
-		System.out.println("Table created successfully");
+		System.out.println("Query executed successfully");
 	}
 	
 	// TODO: Change to a constant string
@@ -159,8 +176,8 @@ public class DatabaseProxy {
 		DatabaseProxy databaseProxy = new DatabaseProxy("test2.db");
 		databaseProxy.close();
 		databaseProxy.connect("test2.db");
-		databaseProxy.executeQuery(databaseProxy.userTableCreationString());
-		databaseProxy.executeQuery(databaseProxy.activityTableCreationString());
+		databaseProxy.executeQuery(databaseProxy.CREATE_USER_TABLE_QUERY);
+		databaseProxy.executeQuery(databaseProxy.CREATE_ACTIVITY_TABLE_QUERY);
 		databaseProxy.close();
 	}
 }

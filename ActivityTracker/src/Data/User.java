@@ -16,6 +16,7 @@ public class User implements DBHandler {
 	boolean isValid;
 	BufferedImage image;
 	DatabaseProxy m;
+	String encodedImage = "no";
 	
 	public User(DatabaseProxy m, String username, String password, String firstName, String lastName, Image image) {
 		this.m = m;
@@ -26,7 +27,6 @@ public class User implements DBHandler {
 		//this.image = null;
 		this.isValid = this.validate();
 	}
-
 
 	public User(DatabaseProxy m, String username, String password) {
 		this.m = m;
@@ -41,6 +41,17 @@ public class User implements DBHandler {
 	public boolean writeToDB() {
 		return false;
 	}
+	
+	public final String VALIDATE_USER_QUERY =  "SELECT rowid, * FROM USER "
+					+ "WHERE username = " + this.username + ", "
+					+ "WHERE password = " + this.password + ";";
+	
+	public final String INSERT_USER_QUERY = "INSERT INTO USER VALUES("
+			+ this.firstName + ", "
+			+ this.lastName + ", "
+			+ this.username + ", "
+			+ this.password + ", "
+			+ encodedImage + ");";
 	
 	public boolean validate() {
 //	http://www.sqlitetutorial.net/sqlite-select/
@@ -59,12 +70,9 @@ public class User implements DBHandler {
 					+ "WHERE username = " + this.username + ", "
 					+ "WHERE password = " + this.password + ";";
 			// need a function to execute query and see if there is a matching row
-			
-			
+			m.executeQuery(query);
 			return false;
 		}
-		
-		
 		
 		// CASE 2: We are creating a user
 		
@@ -73,13 +81,13 @@ public class User implements DBHandler {
 		//ByteArrayOutputStream os = new ByteArrayOutputStream();
 		//ImageIO.write(image, "png", os);
 		//String encodedImage = new String(Base64.getEncoder().encodeToString(os))
-		String encodedImage = "no";
 		String query = "INSERT INTO USER VALUES("
 				+ this.firstName + ", "
 				+ this.lastName + ", "
 				+ this.username + ", "
 				+ this.password + ", "
 				+ encodedImage + ");";
+		m.executeQuery(query);
 		
 		return false;
 		
