@@ -97,4 +97,11 @@ public class UserLoginPanel extends javax.swing.JPanel {
     private javax.swing.JPasswordField jpwPassword;
     private javax.swing.JTextField jtfUsername;
     // End of variables declaration//GEN-END:variables
+	public String getUsername() {
+		return jtfUsername.getText().toString();
+	}
+
+	public String getPassword() {
+		return jpwPassword.getPassword().toString();
+	}
 }

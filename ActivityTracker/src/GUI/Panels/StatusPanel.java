@@ -71,4 +71,11 @@ public class StatusPanel extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
+
+
+	public void setStatus(String string) {
+		// TODO Auto-generated method stub
+		jLabel1.setText("Login failed");
+		
+	}
 }

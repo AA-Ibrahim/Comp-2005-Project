@@ -17,23 +17,25 @@ public class User implements DBHandler {
 	BufferedImage image;
 	DatabaseProxy m;
 	
-	User(DatabaseProxy m, String username, String password, String firstName, String lastName, Image image) {
+	public User(DatabaseProxy m, String username, String password, String firstName, String lastName, Image image) {
 		this.m = m;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		//this.image = null;
-		isValid = this.validate();
+		this.isValid = this.validate();
 	}
-	
-	User(String username, String password) {
+
+
+	public User(DatabaseProxy m, String username, String password) {
+		this.m = m;
 		this.username = username;
 		this.password = password;
 		this.firstName = null;
 		this.lastName = null;
 		this.image = null;
-		isValid = this.validate();
+		this.isValid = validate();
 	}
 	
 	public boolean writeToDB() {
@@ -57,7 +59,12 @@ public class User implements DBHandler {
 					+ "WHERE username = " + this.username + ", "
 					+ "WHERE password = " + this.password + ";";
 			// need a function to execute query and see if there is a matching row
+			
+			
+			return false;
 		}
+		
+		
 		
 		// CASE 2: We are creating a user
 		
@@ -75,7 +82,14 @@ public class User implements DBHandler {
 				+ encodedImage + ");";
 		
 		return false;
+		
 	}
+
+	public boolean isValid() {
+		return isValid;
+		
+	}
+
 
 	
 }

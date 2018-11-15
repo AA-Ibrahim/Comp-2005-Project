@@ -37,7 +37,7 @@ public class DatabaseProxy {
 	 * @param fname This is the name of the local file that has the database.
 	 * 
 	 */
-	DatabaseProxy(String fname) {
+	public DatabaseProxy(String fname) {
 		this();
 		this.databaseFileName = fname;
 		connect(fname);

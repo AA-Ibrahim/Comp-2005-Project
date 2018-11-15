@@ -1,7 +1,0 @@
-package User;
-
-class User {
-	
-	
-
-}

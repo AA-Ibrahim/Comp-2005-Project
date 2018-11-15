@@ -7,6 +7,8 @@ package GUI;
 
  */
 import GUI.Panels.ActivityData;
+import Data.DatabaseProxy;
+import Data.User;
 import GUI.Panels.ContextPanel;
 import GUI.Panels.MyDevicesPanel;
 import GUI.Panels.StatusPanel;
@@ -27,17 +29,26 @@ public class ActivityTrackerGUI extends JFrame {
     StatusPanel status;
     MyDevicesPanel myDevices;
     ActivityData activityData;
+    DatabaseProxy databaseProxy;
+    
 
-    ActivityTrackerGUI() {
-        setLayout(new BorderLayout());
+    public ActivityTrackerGUI() {
+        initializeObjects();
+    	setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initializePanels();
         initializePanelListeners();
         changeToSigninLayout();
         
+        
     }
     
-    private void initializePanels() {
+    private void initializeObjects() {
+		// TODO Auto-generated method stub
+    	databaseProxy = new DatabaseProxy("database.sqlite");
+	}
+
+	private void initializePanels() {
         userDetails = new UserDetailsPanel();
         status = new StatusPanel();
         activityData = new ActivityData();
@@ -52,7 +63,15 @@ public class ActivityTrackerGUI extends JFrame {
             changeToRegistrationLayout();
         });
         userLogin.addSignInListener(ae -> {
-            changeToActivityLayout();
+        	User u = new User(databaseProxy, userLogin.getUsername(), userLogin.getPassword());
+        	if(u.isValid()) {
+        		changeToActivityLayout();	
+        	}
+        	else {
+        		status.setStatus("Login failed");
+        		userRegistration.clearFields();
+        	}
+            
         });
         userRegistration.addSigninListener(ae -> {
             changeToSigninLayout();
@@ -100,23 +119,5 @@ public class ActivityTrackerGUI extends JFrame {
         framePostInitialize();
     }
 
-    public static void main(String[] args) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace(System.out);
-        }
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new ActivityTrackerGUI().setVisible(true);
-            }
-        });
-    }
-
+ 
 }

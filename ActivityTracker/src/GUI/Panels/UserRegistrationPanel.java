@@ -142,4 +142,10 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
     private javax.swing.JPasswordField jtfPassword;
     private javax.swing.JTextField jtfUsername;
     // End of variables declaration//GEN-END:variables
+	public void clearFields() {
+		// TODO Auto-generated method stub
+		jtfUsername.setText("");
+		jtfPassword.setText("");
+		
+	}
 }
