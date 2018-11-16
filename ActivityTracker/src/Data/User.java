@@ -4,8 +4,13 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
-
 import javax.imageio.ImageIO;
+
+/*
+	COMP 2005 Group Project
+	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
+*/
+
 
 public class User implements DBHandler {
 

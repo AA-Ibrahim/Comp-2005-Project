@@ -7,12 +7,15 @@ import java.sql.*;
 
 import GUI.Panels.UserRegistrationPanel;
 
+/*
+	COMP 2005 Group Project
+	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
+*/
+
 /**
  * This object acts as a middle man between the GUI and the database
- * 
- * @author k47swp
- *
  */
+
 public class DatabaseProxy {
 
 	String databaseFileName;
@@ -110,14 +113,16 @@ public class DatabaseProxy {
 			return;
 		}
 
-		// Create a table
+		// Create a statement and execute the query
 		try {
 			statement = connection.createStatement();
 			statement.executeUpdate(query);
 			statement.close();
 			statement = null;
-
-		} catch (Exception e) {
+		}
+		
+		// If the query fails, die.
+		catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -126,12 +131,9 @@ public class DatabaseProxy {
 		System.out.println("Query executed successfully");
 	}
 	
-	// TODO: Change to a constant string
 	// NOTE: ROWID is an implicit primary key. You must ask for it specifically in the select command.
-	
 	//	sqlite> insert into USER VALUES("henrique_clone", "dosp", "henrique", "password1", "dsakkdlsaklkdsa");
 	//	sqlite> select rowid,* from user;
-	
 	//	1|henrique|dosp|henrique|password1|dsakkdlsaklkdsa
 	//	2|henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
 	
@@ -141,30 +143,8 @@ public class DatabaseProxy {
 	//	henrique|dosp|henrique|password1|dsakkdlsaklkdsa
 	//	henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
 
-	String userTableCreationString() {
-		return
-			"CREATE TABLE IF NOT EXISTS USER  ("
-			+ " firstName	TEXT NOT NULL, "
-			+ " lastName    TEXT NOT NULL,"
-			+ " username    TEXT NOT NULL,"
-			+ " password	TEXT NOT NULL,"
-			+ " image		BLOB" + ");";
-	}
-	
-	// TODO: Change to a constant string
-	String activityTableCreationString() {
-		return
-			"CREATE TABLE IF NOT EXISTS ACTIVITY  ("
-			+ " userId		INTEGER, "
-			+ " time		INTEGER,"
-			+ " distance	REAL,"
-			+ " altitude	REAL"
-			+ ");";
-	}
-	
-	/**
-	 * Main method, used for debugging, not intended to be used in production
-	 */
+
+	// Main method, used for debugging, not intended to be used in production
 	public static void main(String[] args) {
 		System.out.println(Paths.get("test2.db"));
 		try {

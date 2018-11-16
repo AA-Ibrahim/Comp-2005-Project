@@ -3,11 +3,10 @@ package GUI.Panels;
 import java.awt.event.ActionListener;
 
 /*
-
-    COMP 2005 Group Project
-    A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
-
+	COMP 2005 Group Project
+	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
+
 
 public class UserRegistrationPanel extends javax.swing.JPanel {
 

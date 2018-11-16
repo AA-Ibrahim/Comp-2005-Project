@@ -1,11 +1,5 @@
 package GUI;
 
-/*
-
-    COMP 2005 Group Project
-    A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
-
- */
 import GUI.Panels.ActivityData;
 import Data.DatabaseProxy;
 import Data.User;
@@ -18,12 +12,15 @@ import GUI.Panels.UserRegistrationPanel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
-
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class ActivityTrackerGUI extends JFrame {
+/*
+	COMP 2005 Group Project
+	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
+*/
 
+public class ActivityTrackerGUI extends JFrame {
 
 	private static final long serialVersionUID = 7637719486842764464L;
 	private UserDetailsPanel userDetails;
@@ -47,7 +44,7 @@ public class ActivityTrackerGUI extends JFrame {
 	}
 
 	/**
-	 * Initialize the class fields 
+	 * Initialize the class fields
 	 */
 	private void initializeFields() {
 		databaseProxy = new DatabaseProxy("database.sqlite");
@@ -67,88 +64,93 @@ public class ActivityTrackerGUI extends JFrame {
 		context = new ContextPanel();
 	}
 
-	/**
-	 * Initialize panel listeners
-	 */
+	// Initialize panel listeners
 	private void initializePanelListeners() {
-		
-		// Listeners for the userLogin panel
-		
-		// Create Account Button Listener
+		//////////////////////////////////////////////////////////////////////
+		// Listeners for the UserLogin panel
+		// "Create Account" Button Listener
+		// Changes window layout to UserRegistrationPanel
 		userLogin.addCreateAccountListener(ae -> {
 			changeToRegistrationLayout();
 		});
-		
-		// Sign In Button Listener
+
+		// "Sign In" Button Listener
+		// Creates a user object
 		userLogin.addSignInListener(ae -> {
 			User u = new User(databaseProxy, userLogin.getUsername(), userLogin.getPassword());
+
+			// If this user object is valid wrt to the db
 			if (u.isValid()) {
+				// Login is successful
+				// TODO: Change the UserDetailsPanel
 				changeToActivityLayout();
-			} else {
+			}
+
+			else {
+				// TODO: Use a better error message
 				status.setStatus("Login failed");
 				userRegistration.clearFields();
 			}
 		});
-		
-		// 
+
+		//////////////////////////////////////////////////////////////////////
+		// Listeners for UserRegistration panel
+		// "Sign In" Button listener
 		userRegistration.addSigninListener(ae -> {
 			// TODO: Create User Object
 			// TODO: Execute Query
 			changeToSigninLayout();
 		});
-		//	public User(DatabaseProxy m, String username, String password, String firstName, String lastName, Image image) {
 
+		// "Create Account" Button listener
+		// Create a user object
 		userRegistration.addCreateAccountListener(ae -> {
-			User u = new User(
-					databaseProxy,
-					userRegistration.getUsername(),
-					userRegistration.getPassword(),
-					userRegistration.getFirstName(),
-					userRegistration.getLastName(),
-					null
-					);
-			if(u.isValid()) {
+			// Reference for object: (DatabaseProxy m, String username, String password,
+			// String firstName, String lastName, Image image) {
+			User u = new User(databaseProxy, userRegistration.getUsername(), userRegistration.getPassword(),
+					userRegistration.getFirstName(), userRegistration.getLastName(), null);
+
+			// If this user object is valid wrt to the db
+			if (u.isValid()) {
+				// Login is successful
+				// TODO: Change the UserDetailsPanel
 				changeToActivityLayout();
 			}
+
+			// Otherwise the user was not valid
 			else {
+				// TODO: Use a better error message
 				status.setStatus("Create failed");
 			}
-					
 		});
 	}
 
+	//////////////////////////////////////////////////////////////////////
+	// Changes the frame to reflect the registration layout
 	private void changeToRegistrationLayout() {
 		framePreInitialize();
 		add(userRegistration, BorderLayout.EAST);
 		framePostInitialize();
 	}
 
+	// Changes the frame to reflect the sign in layout
 	private void changeToSigninLayout() {
 		framePreInitialize();
 		add(userLogin, BorderLayout.EAST);
 		framePostInitialize();
 	}
 
+	// Changes the frame to reflect the activity layout
 	private void changeToActivityLayout() {
 		framePreInitialize();
 		add(activityData, BorderLayout.WEST);
 		add(context, BorderLayout.EAST);
 		context.changeState(ContextPanel.ACTIVITY);
-		setSize(new Dimension(1024, 768));
+		setSize(1024, 768);
 		framePostInitialize();
 	}
 
-	private void framePreInitialize() {
-		getContentPane().removeAll();
-		add(userDetails, BorderLayout.NORTH);
-		add(status, BorderLayout.SOUTH);
-	}
-
-	private void framePostInitialize() {
-		pack();
-		repaint();
-	}
-
+	// Changes the frame to the import activity layout
 	private void changeToImportLayout() {
 		framePreInitialize();
 		add(myDevices, BorderLayout.WEST);
@@ -156,4 +158,19 @@ public class ActivityTrackerGUI extends JFrame {
 		context.changeState(ContextPanel.DEVICES);
 		framePostInitialize();
 	}
+
+	//////////////////////////////////////////////////////////////////////
+	// Pre-initialize the frame
+	private void framePreInitialize() {
+		getContentPane().removeAll();
+		add(userDetails, BorderLayout.NORTH);
+		add(status, BorderLayout.SOUTH);
+	}
+
+	// Post-initialization of the frame
+	private void framePostInitialize() {
+		pack();
+		repaint();
+	}
+
 }

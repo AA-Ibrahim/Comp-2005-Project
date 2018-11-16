@@ -3,10 +3,8 @@ package GUI.Panels;
 import java.awt.event.ActionListener;
 
 /*
-
     COMP 2005 Group Project
     A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
-
 */
 
 public class UserLoginPanel extends javax.swing.JPanel {
