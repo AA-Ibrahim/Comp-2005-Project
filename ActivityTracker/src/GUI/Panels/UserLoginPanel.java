@@ -17,6 +17,12 @@ public class UserLoginPanel extends javax.swing.JPanel {
         jbSignin.addActionListener(ae);
     }
     
+    public void clearFields() {
+		// TODO Auto-generated method stub
+		jtfUsername.setText("");
+		jpwPassword.setText("");	
+	}
+    
     public UserLoginPanel() {
         initComponents();
     }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.*;
+import java.util.ArrayList;
 
 import GUI.Panels.UserRegistrationPanel;
 
@@ -11,6 +12,18 @@ import GUI.Panels.UserRegistrationPanel;
 	COMP 2005 Group Project
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
+
+// NOTE: ROWID is an implicit primary key. You must ask for it specifically in the select command.
+//	sqlite> insert into USER VALUES("henrique_clone", "dosp", "henrique", "password1", "dsakkdlsaklkdsa");
+//	sqlite> select rowid,* from user;
+//	1|henrique|dosp|henrique|password1|dsakkdlsaklkdsa
+//	2|henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
+
+// VS...
+
+//	sqlite> select * from user;
+//	henrique|dosp|henrique|password1|dsakkdlsaklkdsa
+//	henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
 
 /**
  * This object acts as a middle man between the GUI and the database
@@ -31,36 +44,27 @@ public class DatabaseProxy {
 		connection = null;
 		statement = null;
 	}
-	
-	private static final String CREATE_USER_TABLE_QUERY = 
-			"CREATE TABLE IF NOT EXISTS USER  ("
-			+ " firstName	TEXT NOT NULL, "
-			+ " lastName    TEXT NOT NULL,"
-			+ " username    TEXT NOT NULL,"
-			+ " password	TEXT NOT NULL,"
-			+ " image		BLOB" + ");";
 
-	private static final String CREATE_ACTIVITY_TABLE_QUERY =
-			"CREATE TABLE IF NOT EXISTS ACTIVITY  ("
-					+ " userId		INTEGER, "
-					+ " time		INTEGER,"
-					+ " distance	REAL,"
-					+ " altitude	REAL"
-					+ ");";
+	private static final String CREATE_USER_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS USER  ("
+			+ " firstName	TEXT NOT NULL, " + " lastName    TEXT NOT NULL," + " username    TEXT NOT NULL,"
+			+ " password	TEXT NOT NULL," + " image		BLOB" + ");";
+
+	private static final String CREATE_ACTIVITY_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS ACTIVITY  ("
+			+ " userId		INTEGER, " + " time		INTEGER," + " distance	REAL," + " altitude	REAL" + ");";
+
 	/**
 	 * This constructor creates this object, and connects to a database specified by
 	 * a particular filename. This constructor is simply an overloaded version of
 	 * the default constructor.
 	 * 
 	 * @param fname This is the name of the local file that has the database.
-	 * 
 	 */
 	public DatabaseProxy(String fname) {
 		this();
 		this.databaseFileName = fname;
 		connect(fname);
-		this.executeQuery(CREATE_USER_TABLE_QUERY);
-		this.executeQuery(CREATE_ACTIVITY_TABLE_QUERY);
+		this.executeUpdate(CREATE_USER_TABLE_QUERY);
+		this.executeUpdate(CREATE_ACTIVITY_TABLE_QUERY);
 	}
 
 	/**
@@ -103,24 +107,27 @@ public class DatabaseProxy {
 	}
 
 	/**
-	 * Creates a table
+	 * This runs an update query on the database
+	 * 
+	 * @param query This is the SQL update query to run.
 	 */
-	void executeQuery(String query) {
+	int executeUpdate(String query) {
+		int affected_rows = 0;
 
 		// Make sure that the database is open
 		if (connection == null) {
-			System.out.println("Database is not opened");
-			return;
+			System.out.println("Database is not open");
+			System.exit(0);
 		}
 
 		// Create a statement and execute the query
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate(query);
+			affected_rows = statement.executeUpdate(query);
 			statement.close();
 			statement = null;
 		}
-		
+
 		// If the query fails, die.
 		catch (Exception e) {
 			e.printStackTrace();
@@ -128,36 +135,67 @@ public class DatabaseProxy {
 		}
 
 		// Let the user know it happened
-		System.out.println("Query executed successfully");
+		System.out.println("Query '" + query + "' successful.");
+		System.out.println("Affected " + affected_rows + " rows.");
+
+		return affected_rows;
 	}
-	
-	// NOTE: ROWID is an implicit primary key. You must ask for it specifically in the select command.
-	//	sqlite> insert into USER VALUES("henrique_clone", "dosp", "henrique", "password1", "dsakkdlsaklkdsa");
-	//	sqlite> select rowid,* from user;
-	//	1|henrique|dosp|henrique|password1|dsakkdlsaklkdsa
-	//	2|henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
-	
-	// VS...
-	
-	//	sqlite> select * from user;
-	//	henrique|dosp|henrique|password1|dsakkdlsaklkdsa
-	//	henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
 
+	/**
+	 * Executes a query against the database
+	 * 
+	 * @param query This is the SQL statement to run.
+	 * @return A ResultSet for the specified query.
+	 */
+	ResultSet executeQuery(String query) {
+		ResultSet rs = null;
+		
+		// Check to see if our DB is open
+		if (connection == null) {
+			System.out.println("Database is not open");
+			System.exit(0);
+		}
 
-	// Main method, used for debugging, not intended to be used in production
+		// Try to execute the query
+		try {
+			statement = connection.createStatement();
+			rs = statement.executeQuery(query);
+		}
+		
+		// The query failed
+		catch (Exception e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
+		// The query was successful
+		System.out.println("Query '" + query + "' successful.");
+		return rs;
+	}
+
+	/**
+	 * Main method, used for testing and debugging. Not intended to be used in
+	 * production
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		System.out.println(Paths.get("test2.db"));
+
+		// Delete our test db if it exists
 		try {
 			Files.deleteIfExists(Paths.get("test2.db"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+
+		catch (IOException e) {
+			e.printStackTrace();
+			System.exit(0);
+		}
+		
 		DatabaseProxy databaseProxy = new DatabaseProxy("test2.db");
 		databaseProxy.close();
 		databaseProxy.connect("test2.db");
-		databaseProxy.executeQuery(databaseProxy.CREATE_USER_TABLE_QUERY);
-		databaseProxy.executeQuery(databaseProxy.CREATE_ACTIVITY_TABLE_QUERY);
+		databaseProxy.executeUpdate(DatabaseProxy.CREATE_USER_TABLE_QUERY);
+		databaseProxy.executeUpdate(DatabaseProxy.CREATE_ACTIVITY_TABLE_QUERY);
 		databaseProxy.close();
 	}
 }

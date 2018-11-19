@@ -68,6 +68,20 @@ public class ActivityTrackerGUI extends JFrame {
 	private void initializePanelListeners() {
 		//////////////////////////////////////////////////////////////////////
 		// Listeners for the UserLogin panel
+		// Logout Button Listener
+		// Logs out current user
+		userDetails.addLogoutListener(ae -> {
+			userDetails.setUser(null);
+			changeToSigninLayout();
+		});
+		// Logout Button Listener
+		// Logs out current user
+		userDetails.addImportDataListener(ae -> {
+			changeToImportLayout();
+		});
+
+		//////////////////////////////////////////////////////////////////////
+		// Listeners for the UserLogin panel
 		// "Create Account" Button Listener
 		// Changes window layout to UserRegistrationPanel
 		userLogin.addCreateAccountListener(ae -> {
@@ -77,19 +91,22 @@ public class ActivityTrackerGUI extends JFrame {
 		// "Sign In" Button Listener
 		// Creates a user object
 		userLogin.addSignInListener(ae -> {
+			
+			// Create a object object that corresponds to the fields
+			// It'll validate itself, and we can check this validation
 			User u = new User(databaseProxy, userLogin.getUsername(), userLogin.getPassword());
 
 			// If this user object is valid wrt to the db
-			if (u.isValid()) {
+			if (u.getValid()) {
 				// Login is successful
-				// TODO: Change the UserDetailsPanel
+				userDetails.setUser(u);
 				changeToActivityLayout();
 			}
 
 			else {
 				// TODO: Use a better error message
 				status.setStatus("Login failed");
-				userRegistration.clearFields();
+				userLogin.clearFields();
 			}
 		});
 
@@ -97,23 +114,28 @@ public class ActivityTrackerGUI extends JFrame {
 		// Listeners for UserRegistration panel
 		// "Sign In" Button listener
 		userRegistration.addSigninListener(ae -> {
-			// TODO: Create User Object
-			// TODO: Execute Query
 			changeToSigninLayout();
 		});
 
 		// "Create Account" Button listener
 		// Create a user object
 		userRegistration.addCreateAccountListener(ae -> {
-			// Reference for object: (DatabaseProxy m, String username, String password,
-			// String firstName, String lastName, Image image) {
+			
+			// Return if the fields are blank
+			if (userRegistration.getFirstName().equals("") || userRegistration.getLastName().equals("")
+					|| userRegistration.getUsername().equals("") || userRegistration.getPassword().equals("")) {
+				status.setStatus("Error: Must fill in all fields");
+				return;
+			}
+			
+			// Create a new object to validate itself
 			User u = new User(databaseProxy, userRegistration.getUsername(), userRegistration.getPassword(),
 					userRegistration.getFirstName(), userRegistration.getLastName(), null);
 
 			// If this user object is valid wrt to the db
-			if (u.isValid()) {
+			if (u.getValid()) {
 				// Login is successful
-				// TODO: Change the UserDetailsPanel
+				userDetails.setUser(u);
 				changeToActivityLayout();
 			}
 
@@ -172,5 +194,4 @@ public class ActivityTrackerGUI extends JFrame {
 		pack();
 		repaint();
 	}
-
 }

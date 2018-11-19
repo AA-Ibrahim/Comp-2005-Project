@@ -52,8 +52,7 @@ public class StatusPanel extends javax.swing.JPanel {
 
 
 	public void setStatus(String string) {
-		// TODO Auto-generated method stub
-		jLabel1.setText("Login failed");
+		jLabel1.setText(string);
 		
 	}
 }

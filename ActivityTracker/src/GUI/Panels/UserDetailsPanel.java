@@ -1,5 +1,9 @@
 package GUI.Panels;
 
+import java.awt.event.ActionListener;
+
+import Data.User;
+
 /*
 
     COMP 2005 Group Project
@@ -8,11 +12,42 @@ package GUI.Panels;
 */
 
 public class UserDetailsPanel extends javax.swing.JPanel {
-
+	User u;
+	
     public UserDetailsPanel() {
+    	u=null;
         initComponents();
     }
+    
+    public void setUser(User u) {
+    	if(u==null) {
+        	jLabel7.setText("not logged in");
+            jbLogout.setEnabled(false);
+            jbImportData.setEnabled(false);   
+            return;
+            		}
+    	this.u = u;
+    	jLabel7.setText(u.getFirstName() + " " + u.getLastName());
+        jbLogout.setEnabled(true);
+        jbImportData.setEnabled(true);
+    }
+    
+    public User getUser() {
+    	return u;
+    }
+    
+    public void addImportDataListener(ActionListener ae) {
+        jbImportData.addActionListener(ae);
+    }
+    
+    public void addLogoutListener(ActionListener ae) {
+    	jbLogout.addActionListener(ae);
+    }
 
+    public void update(String fname, String lname) {
+
+       
+    }
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
