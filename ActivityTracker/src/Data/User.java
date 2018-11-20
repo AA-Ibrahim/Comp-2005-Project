@@ -72,6 +72,8 @@ public class User implements DBHandler {
 
 	public final String INSERT_USER_QUERY = "INSERT INTO USER VALUES(" + this.firstName + ", " + this.lastName + ", "
 			+ this.username + ", " + this.password + ", " + encodedImage + ");";
+	
+	//public final String VALIDATE_USERNAME = "SELECT rowid FROM USER WHERE username = " + 
 
 	/**
 	 * Validation function for this object's current instance against the database.
