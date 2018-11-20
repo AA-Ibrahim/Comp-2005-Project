@@ -72,7 +72,8 @@ public class ActivityTrackerGUI extends JFrame {
 		// Logs out current user
 		userDetails.addLogoutListener(ae -> {
 			userDetails.setUser(null);
-			changeToSigninLayout();
+			userLogin.clearFields();	// remove the password
+			changeToSigninLayout(); 
 		});
 		// Logout Button Listener
 		// Logs out current user
@@ -100,6 +101,7 @@ public class ActivityTrackerGUI extends JFrame {
 			if (u.getValid()) {
 				// Login is successful
 				userDetails.setUser(u);
+				status.setStatus("Login successful");
 				changeToActivityLayout();
 			}
 
@@ -136,6 +138,7 @@ public class ActivityTrackerGUI extends JFrame {
 			if (u.getValid()) {
 				// Login is successful
 				userDetails.setUser(u);
+				status.setStatus("Login successful");
 				changeToActivityLayout();
 			}
 
