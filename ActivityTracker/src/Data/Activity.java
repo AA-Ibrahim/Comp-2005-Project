@@ -27,18 +27,18 @@ public class Activity implements DBHandler {
 	/*
 	 * param
 	 */
-	public Activity(DatabaseProxy m, String activityType, String date, String username, Double time, Double distance, Double altitude, Image image) {
+	public Activity(DatabaseProxy m, String activityType, String date, String userId, Double time, Double distance, Double altitude, Image image) {
 		this.m = m;
 		this.activityType = activityType;
 		this.date = date;
-		this.userID = username;
+		this.userID = userId;
 		this.time = time;
 		this.distance = distance;
 		this.altitude = altitude;
 		this.isValid = this.validate();
 	}
 
-	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE username = " + this.userID + ";";
+	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE rowid = " + this.userID + ";";
 
 	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " +  this.userID + ", "
 	+ this.time + ", " + this.distance + ", " + this.altitude + ", " + this.date + ");";
