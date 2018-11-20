@@ -17,15 +17,13 @@ public class Activity implements DBHandler {
 
 	String activityType;
 	String date;
-	String username;
+	String userID;
 	Double time;
 	Double distance;
 	Double altitude;
 	boolean isValid;
-	BufferedImage image;
 	DatabaseProxy m;
-	String encodedImage = "no";
-
+	
 	/*
 	 * param
 	 */
@@ -33,18 +31,17 @@ public class Activity implements DBHandler {
 		this.m = m;
 		this.activityType = activityType;
 		this.date = date;
-		this.username = username;
+		this.userID = username;
 		this.time = time;
 		this.distance = distance;
 		this.altitude = altitude;
-		// this.image = null;
 		this.isValid = this.validate();
 	}
 
-	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE username = " + this.username + ";";
+	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE username = " + this.userID + ";";
 
-	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.date + ", "
-			+ this.username + ", " + this.time + ", " + this.distance + ", " + this.altitude + ", " + encodedImage + ");";
+	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " +  this.userID + ", "
+	+ this.time + ", " + this.distance + ", " + this.altitude + ", " + this.date + ");";
 
 	public String getActivityType() {
 		return activityType;
@@ -63,11 +60,11 @@ public class Activity implements DBHandler {
 	}
 
 	public String getUsername() {
-		return username;
+		return userID;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.userID = username;
 	}
 
 	public Double getTime() {
@@ -94,14 +91,6 @@ public class Activity implements DBHandler {
 		this.altitude = altitude;
 	}
 
-	public BufferedImage getImage() {
-		return image;
-	}
-
-	public void setImage(BufferedImage image) {
-		this.image = image;
-	}
-
 	public DatabaseProxy getM() {
 		return m;
 	}
@@ -110,13 +99,6 @@ public class Activity implements DBHandler {
 		this.m = m;
 	}
 
-	public String getEncodedImage() {
-		return encodedImage;
-	}
-
-	public void setEncodedImage(String encodedImage) {
-		this.encodedImage = encodedImage;
-	}
 
 	@Override
 	public boolean validate() {
