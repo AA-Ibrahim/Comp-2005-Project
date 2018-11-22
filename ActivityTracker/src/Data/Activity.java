@@ -61,6 +61,44 @@ public class Activity implements DBHandler {
 		m.executeUpdate(insertQuery);
 		return true;
 	}
+	
+	public String[][] getRecordsFromRange(Date begin, Date end){
+		Vector<String[]> rowVector = new Vector<>();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date ddate;
+		long ldate;
+		
+		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID 
+		+ "' AND WHERE date BETWEEN " + begin.getTime() + " AND " + end.getTime() + ";";
+		
+		ResultSet rs = m.executeQuery(query);
+
+		try {
+			while (rs.next()) {
+				String[] rowString = new String[7];
+				ldate = Long.valueOf(rs.getString("date"));
+				ddate = new Date(ldate);
+				rowString[0] = sdf.format(ddate);
+				rowString[1] = rs.getString("time");
+				rowString[2] = rs.getString("distance");
+				rowString[3] = rs.getString("altitudeGain");
+				rowString[4] = rs.getString("altitudeLoss");
+				rowString[5] = rs.getString("pace");
+				rowString[6] = rs.getString("caloriesBurned");
+				rowVector.add(rowString);
+			}
+			String[][] rowStrings = new String[rowVector.size()][7];
+
+			for (int i = 0; i < rowVector.size(); i++)
+				rowStrings[i] = rowVector.get(i);
+
+			return rowStrings;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new String[0][0];		
+	}
 
 	public String[][] getRecords() {
 		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID + "';";
