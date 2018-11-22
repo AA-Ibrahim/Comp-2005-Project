@@ -2,6 +2,8 @@ package GUI.Panels;
 
 import java.util.Properties;
 
+import javax.swing.JButton;
+
 import org.jdatepicker.impl.DateComponentFormatter;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -36,6 +38,7 @@ public class ContextPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        ok = new JButton("Get Range");
 
         
         jlContextInfo = new javax.swing.JLabel();
@@ -45,7 +48,7 @@ public class ContextPanel extends javax.swing.JPanel {
         datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
        	properties.put("text.today", "Today");
        	model2 = new UtilDateModel();
-       	datePanel2 = new JDatePanelImpl(model,properties);
+       	datePanel2 = new JDatePanelImpl(model2,properties);
        	datePicker2 = new JDatePickerImpl(datePanel, new DateComponentFormatter());
 
     	properties.put("text.month", "Month");
@@ -56,7 +59,7 @@ public class ContextPanel extends javax.swing.JPanel {
         jlContextInfo.setText("<html><h2>Import data <h3>Choose a device among the supported choices <h3>Your activity will be imported.<h4>Sort your data by date below");
         add(jlContextInfo, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 2));
 
         jLabel2.setText("Start Date");
         jPanel1.add(jLabel2);
@@ -67,6 +70,7 @@ public class ContextPanel extends javax.swing.JPanel {
         jPanel1.add(jLabel1);
 
         jPanel1.add(datePicker2);
+        jPanel1.add(ok);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_END);
     }// </editor-fold>                        
@@ -76,6 +80,7 @@ public class ContextPanel extends javax.swing.JPanel {
     private JDatePickerImpl datePicker, datePicker2;
     private Properties properties;
     private JDatePanelImpl datePanel, datePanel2;
+    private JButton ok;
     private UtilDateModel model, model2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
