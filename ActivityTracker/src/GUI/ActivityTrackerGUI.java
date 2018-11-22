@@ -87,6 +87,11 @@ public class ActivityTrackerGUI extends JFrame {
 		userDetails.addImportDataListener(ae -> {
 			changeToImportLayout();
 		});
+		// MyActivity Button Listener
+		// Switches to my activity
+		userDetails.addMyActivityListener(ae -> {
+			changeToActivityLayout();
+		});
 
 		//////////////////////////////////////////////////////////////////////
 		// Listeners for the UserLogin panel

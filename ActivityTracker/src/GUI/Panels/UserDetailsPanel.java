@@ -24,18 +24,23 @@ public class UserDetailsPanel extends javax.swing.JPanel {
 			jLabel7.setText("not logged in");
 			jbLogout.setEnabled(false);
 			jbImportData.setEnabled(false);
+			jbMyActivity.setEnabled(false);
 			return;
 		}
 		this.u = u;
 		jLabel7.setText(u.getFirstName() + " " + u.getLastName());
 		jbLogout.setEnabled(true);
 		jbImportData.setEnabled(true);
+		jbMyActivity.setEnabled(true);
 	}
 
 	public User getUser() {
 		return u;
 	}
 
+	public void addMyActivityListener(ActionListener ae) {
+		jbMyActivity.addActionListener(ae);
+	}
 	public void addImportDataListener(ActionListener ae) {
 		jbImportData.addActionListener(ae);
 	}
