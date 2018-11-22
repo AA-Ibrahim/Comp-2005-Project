@@ -38,7 +38,7 @@ public class DatabaseProxy {
 			+ " password	TEXT NOT NULL," + " image		BLOB" + ");";
 
 	private static final String CREATE_ACTIVITY_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS ACTIVITY  ("
-			+ " activityType	TEXT NOT NULL, " + " userID	TEXT NOT NULL, " + " date	TEXT," + " time	REAL," 
+			+ " activityType	TEXT NOT NULL, " + " userID	TEXT NOT NULL, " + " date	INTEGER," + " time	REAL," 
 			+ " distance	REAL," + " altitudeGain	REAL,"  + " altitudeLoss	REAL," + " pace	REAL," + " caloriesBurned	REAL" + ");";
 
 	/**

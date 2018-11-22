@@ -10,6 +10,9 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.SequenceInputStream;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -182,6 +185,8 @@ public class ActivityTrackerGUI extends JFrame {
 					String userid = u.getId();
 					String activityType = "run";
 					String sdate = "";// = Long.toString(date);
+					Date ddate;
+					long date = 0;
 					double time = 0;
 					double distance = 0;
 					double altitudeGain = 0;
@@ -196,20 +201,22 @@ public class ActivityTrackerGUI extends JFrame {
 					Activity a;
 
 					// Necessary evil to make format file to our specification
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					FileInputStream is1=new FileInputStream(fd.getDirectory() + "/" + fd.getFile());
 					File file = new File("../ActivityTracker/src/Data/input2.csv");
 					FileInputStream is2=new FileInputStream(file);
 					SequenceInputStream is=new SequenceInputStream(is1, is2);
-					reader = new BufferedReader(new InputStreamReader(is, charset));
+					reader = new BufferedReader(new InputStreamReader(is));
 					String line = reader.readLine();
 					
+						
 					while (line != null) {
 						
 						words =  line.split(",");
 						
 						if (words[0].equals("0") && lineNum > 0) {
 
-							a = new Activity(databaseProxy, activityType, userid, sdate, time, distance,
+							a = new Activity(databaseProxy, activityType, userid, date, time, distance,
 									altitudeGain, altitudeLoss, pace, calories);
 
 							altitudeGain = 0;
@@ -220,6 +227,8 @@ public class ActivityTrackerGUI extends JFrame {
 							distance = Double.valueOf(words[1]);
 							altitude = Double.valueOf(words[2]);	
 							sdate = words[3];
+							ddate = sdf.parse(sdate);
+							date = ddate.getTime();
 							pace = Math.round(100.0*distance/time)/100.0;
 							calories = 80 * distance;
 							altitudeDifference = altitude - altitudePast;
