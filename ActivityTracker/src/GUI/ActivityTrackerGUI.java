@@ -203,10 +203,20 @@ public class ActivityTrackerGUI extends JFrame {
 								// TODO: set all fields to be initiale values
 								time = Double.valueOf(words[0]);
 								distance = Double.valueOf(words[1]);
-								sdate = words[2];
+								sdate = words[3];
+								
+								System.out.print("date = " + sdate);
+								System.out.print("time = " + time);
+								System.out.print("distance = " + distance);
+								System.out.print("altitudeGain = " + altitudeGain);
+								System.out.print("altitudeLoss = " + altitudeLoss);
+								System.out.print("pace = " + pace);
+								System.out.print("calories = " + calories);
+
 								System.out.println("Creating new record");
 								
 								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
+								
 								altitudeGain = 0;
 								altitudeLoss = 0;
 								altitude = 0;
@@ -219,8 +229,22 @@ public class ActivityTrackerGUI extends JFrame {
 						System.out.println();
 						line = reader.readLine();
 						if (line == null) {
+							time = Double.valueOf(words[0]);
+							distance = Double.valueOf(words[1]);
+							sdate = words[3];
+							
+							System.out.print("date = " + sdate);
+							System.out.print("time = " + time);
+							System.out.print("distance = " + distance);
+							System.out.print("altitudeGain = " + altitudeGain);
+							System.out.print("altitudeLoss = " + altitudeLoss);
+							System.out.print("pace = " + pace);
+							System.out.print("calories = " + calories);
+
+							System.out.println("Creating new record");
+							
 							System.out.println("Creating new record, EOF");
-							//a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
+							a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
 							break;	
 						}
 						time = Double.valueOf(words[0]);

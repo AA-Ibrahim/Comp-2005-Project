@@ -39,13 +39,15 @@ public class Activity implements DBHandler {
 		this.altitudeGain = altitudeGain;
 		this.altitudeLoss = altitudeLoss;
 		this.date = date;
+		this.pace = pace;
+		this.caloriesBurned = caloriesBurned;
 		this.isValid = this.validate();
 	}
 
 	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE rowid = " + this.userID + ";";
 
-	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " +  this.userID + ", " +
-			 this.date + ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", "  + this.altitudeLoss + ", " + + this.pace + ", " + this.caloriesBurned + ");";
+	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " +  this.userID + ", " + this.date + ", " + this.time + ", "
+			 + this.distance + ", " + this.altitudeGain + ", "  + this.altitudeLoss + ", " +  this.pace + ", " + this.caloriesBurned + ");";
 
 	
 
