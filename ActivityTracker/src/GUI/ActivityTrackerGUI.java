@@ -174,7 +174,7 @@ public class ActivityTrackerGUI extends JFrame {
 					String activityType = "run";
 					long date;// = (long) new Date().getTime();
 					String sdate;// = Long.toString(date);
-					double time = 0;
+					double time = -1;
 					double distance;
 					double altitudeGain;
 					double altitudeLoss;
@@ -190,17 +190,15 @@ public class ActivityTrackerGUI extends JFrame {
 					
 					
 					while (true) {
-						if(words[0]=="0" && words[1]=="0" && words[2]=="0") {
-							if(time==0) {
-								break;
-							}
-							else {
+						if(words[0].equals("0")) {
+							if(time!=-1) {
 								// TODO: set all fields to be initiale values
 								System.out.println("Creating new record");
-								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
-								 
+								//a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
+								
 							}
 						}
+						time = 2;
 						for (String x : words)
 							System.out.print(x + " ");
 						
@@ -209,7 +207,7 @@ public class ActivityTrackerGUI extends JFrame {
 						line = reader.readLine();
 						if (line == null) {
 							System.out.println("Creating new record, EOF");
-							a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
+							//a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
 							break;	
 						}
 						words = line.split(",");
@@ -222,8 +220,9 @@ public class ActivityTrackerGUI extends JFrame {
 
 				}
 				System.out.println("You chose " + filename);
+				
 			}
-
+			this.changeToActivityLayout();
 		});
 	}
 
