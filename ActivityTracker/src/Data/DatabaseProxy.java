@@ -163,10 +163,5 @@ public class DatabaseProxy {
 		return rs;
 	}
 
-	/**
-	 * Main method, used for testing and debugging. Not intended to be used in
-	 * production
-	 * 
-	 * @param args
-	 */
+
 }
