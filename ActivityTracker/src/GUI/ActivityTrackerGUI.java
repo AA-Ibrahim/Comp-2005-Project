@@ -4,7 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FileDialog;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.SequenceInputStream;
+import java.nio.charset.Charset;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
@@ -172,11 +177,12 @@ public class ActivityTrackerGUI extends JFrame {
 			} else {
 				BufferedReader reader;
 				try {
+					Charset charset = Charset.forName("UTF-8");
 					User u = userDetails.getUser();
 					String userid = u.getId();
 					String activityType = "run";
 					String sdate = "";// = Long.toString(date);
-					double time = -1;
+					double time = 0;
 					double distance = 0;
 					double altitudeGain = 0;
 					double altitudeLoss = 0;
@@ -185,70 +191,49 @@ public class ActivityTrackerGUI extends JFrame {
 					double altitude = 0;
 					double altitudePast = 0;
 					double altitudeDifference = 0;
-
-					reader = new BufferedReader(new FileReader(fd.getDirectory() + "/" + fd.getFile()));
-
-					String line = reader.readLine();
-					String[] words = line.split(",");
+					int lineNum = 0;
+					String[] words;
 					Activity a;
-					while (true) {
-						if (words[0].equals("0")) {
-							if (time != -1) {
-								System.out.println("Creating new record");
-								time = Double.valueOf(words[0]);
-								distance = Double.valueOf(words[1]);
-								sdate = words[3];
-								System.out.print("date = " + sdate);
-								System.out.print("time = " + time);
-								System.out.print("distance = " + distance);
-								System.out.print("altitudeGain = " + altitudeGain);
-								System.out.print("altitudeLoss = " + altitudeLoss);
-								System.out.print("pace = " + pace);
-								System.out.print("calories = " + calories);
 
-								System.out.println("Creating new record");
-								System.out.println(databaseProxy);
-								a = new Activity(databaseProxy, activityType, userid, sdate, time, distance,
-										altitudeGain, altitudeLoss, pace, calories);
+					// Necessary evil to make format file to our specification
+					FileInputStream is1=new FileInputStream(fd.getDirectory() + "/" + fd.getFile());
+					File file = new File("../ActivityTracker/src/Data/input2.csv");
+					FileInputStream is2=new FileInputStream(file);
+					SequenceInputStream is=new SequenceInputStream(is1, is2);
+					reader = new BufferedReader(new InputStreamReader(is, charset));
+					String line = reader.readLine();
+					
+					while (line != null) {
+						
+						words =  line.split(",");
+						
+						if (words[0].equals("0") && lineNum > 0) {
 
-								altitudeGain = 0;
-								altitudeLoss = 0;
-								altitude = 0;
-							}
+							a = new Activity(databaseProxy, activityType, userid, sdate, time, distance,
+									altitudeGain, altitudeLoss, pace, calories);
+
+							altitudeGain = 0;
+							altitudeLoss = 0;
 						}
-
-						System.out.println();
-						line = reader.readLine();
-						if (line == null) {
+						else {
 							time = Double.valueOf(words[0]);
 							distance = Double.valueOf(words[1]);
+							altitude = Double.valueOf(words[2]);	
 							sdate = words[3];
-
-							System.out.print("date = " + sdate);
-							System.out.print("time = " + time);
-							System.out.print("distance = " + distance);
-							System.out.print("altitudeGain = " + altitudeGain);
-							System.out.print("altitudeLoss = " + altitudeLoss);
-							System.out.print("pace = " + pace);
-							System.out.print("calories = " + calories);
-
-							System.out.println("Creating new record");
-
-							System.out.println("Creating new record, EOF");
-							a = new Activity(databaseProxy, activityType, userid, sdate, time, distance, altitudeGain,
-									altitudeLoss, pace, calories);
-							break;
+							pace = Math.round(100.0*distance/time)/100.0;
+							calories = 80 * distance;
+							altitudeDifference = altitude - altitudePast;
+							
+							if (altitudeDifference >= 0) {
+								altitudeGain += altitudeDifference;
+							} else {
+								altitudeLoss += altitudeDifference;
+							}
+							altitudePast = altitude;
 						}
-						time = Double.valueOf(words[0]);
-						words = line.split(",");
-						altitude = Double.valueOf(words[2]);
-						altitudeDifference = altitude - altitudePast;
-						if (altitudeDifference >= 0) {
-							altitudeGain += altitudeDifference;
-						} else {
-							altitudeLoss += altitudeDifference;
-						}
-						altitudePast = altitude;
+						
+						line = reader.readLine();
+						lineNum++;
 					}
 
 				} catch (Exception e) {
@@ -256,6 +241,7 @@ public class ActivityTrackerGUI extends JFrame {
 					System.exit(-1);
 
 				}
+				
 				System.out.println("Import successful.");
 
 			}
