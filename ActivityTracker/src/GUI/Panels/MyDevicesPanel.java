@@ -2,11 +2,16 @@ package GUI.Panels;
 
 import java.awt.Component;
 import java.awt.FileDialog;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
+import Data.Activity;
 
 /*
 
@@ -17,6 +22,10 @@ import javax.swing.SwingUtilities;
 
 public class MyDevicesPanel extends javax.swing.JPanel {
 
+    public void addImportListener(ActionListener ae) {
+        jButton6.addActionListener(ae);
+    }
+    
 	public MyDevicesPanel() {
 		initComponents();
 	}
@@ -45,19 +54,7 @@ public class MyDevicesPanel extends javax.swing.JPanel {
 		jButton6.setBorderPainted(false);
 
 		jLabel1.setText("Your Computer");
-		jButton6.addActionListener(ae -> {
-			JFrame j = (JFrame) SwingUtilities.getWindowAncestor((Component) ae.getSource());
-			FileDialog fd = new FileDialog(j, "Test", FileDialog.LOAD);
-			// new FileDialog(this, "Choose a file", FileDialog.LOAD);
-			//fd.setDirectory("C:\\");
-			fd.setFile("*.csv");
-			fd.setVisible(true);
-			String filename = fd.getFile();
-			if (filename == null)
-				System.out.println("You cancelled the choice");
-			else
-				System.out.println("You chose " + filename);
-		});
+
 
 		jLabel2.setText("Garmin Monitor");
 

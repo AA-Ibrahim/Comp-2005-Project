@@ -1,6 +1,7 @@
 package GUI;
 
 import GUI.Panels.ActivityData;
+import Data.Activity;
 import Data.DatabaseProxy;
 import Data.User;
 import GUI.Panels.ContextPanel;
@@ -10,8 +11,14 @@ import GUI.Panels.UserDetailsPanel;
 import GUI.Panels.UserLoginPanel;
 import GUI.Panels.UserRegistrationPanel;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FileDialog;
 import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Date;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -72,8 +79,8 @@ public class ActivityTrackerGUI extends JFrame {
 		// Logs out current user
 		userDetails.addLogoutListener(ae -> {
 			userDetails.setUser(null);
-			userLogin.clearFields();	// remove the password
-			changeToSigninLayout(); 
+			userLogin.clearFields(); // remove the password
+			changeToSigninLayout();
 		});
 		// Logout Button Listener
 		// Logs out current user
@@ -92,7 +99,7 @@ public class ActivityTrackerGUI extends JFrame {
 		// "Sign In" Button Listener
 		// Creates a user object
 		userLogin.addSignInListener(ae -> {
-			
+
 			// Create a object object that corresponds to the fields
 			// It'll validate itself, and we can check this validation
 			User u = new User(databaseProxy, userLogin.getUsername(), userLogin.getPassword());
@@ -122,14 +129,14 @@ public class ActivityTrackerGUI extends JFrame {
 		// "Create Account" Button listener
 		// Create a user object
 		userRegistration.addCreateAccountListener(ae -> {
-			
+
 			// Return if the fields are blank
 			if (userRegistration.getFirstName().equals("") || userRegistration.getLastName().equals("")
 					|| userRegistration.getUsername().equals("") || userRegistration.getPassword().equals("")) {
 				status.setStatus("Error: Must fill in all fields");
 				return;
 			}
-			
+
 			// Create a new object to validate itself
 			User u = new User(databaseProxy, userRegistration.getUsername(), userRegistration.getPassword(),
 					userRegistration.getFirstName(), userRegistration.getLastName(), null);
@@ -147,6 +154,76 @@ public class ActivityTrackerGUI extends JFrame {
 				// TODO: Use a better error message
 				status.setStatus("Create failed");
 			}
+		});
+
+		myDevices.addImportListener(ae -> {
+			JFrame j = (JFrame) SwingUtilities.getWindowAncestor((Component) ae.getSource());
+			FileDialog fd = new FileDialog(j, "Test", FileDialog.LOAD);
+			// new FileDialog(this, "Choose a file", FileDialog.LOAD);
+			// fd.setDirectory("C:\\");
+			fd.setFile("*.csv");
+			fd.setVisible(true);
+			String filename = fd.getFile();
+			if (filename == null) {
+				System.out.println("You cancelled the choice");
+			} else {
+				BufferedReader reader;
+				try {
+					User u = userDetails.getUser();
+					String userid = u.getId();
+					String activityType = "run";
+					long date;// = (long) new Date().getTime();
+					String sdate;// = Long.toString(date);
+					double time = 0;
+					double distance;
+					double altitudeGain;
+					double altitudeLoss;
+					double pace;
+					double calories;
+					Activity a;
+					
+										
+					reader = new BufferedReader(new FileReader(fd.getDirectory() + "/" + fd.getFile()));			
+					
+					String line = reader.readLine();
+					String[] words = line.split(",");
+					
+					
+					while (true) {
+						if(words[0]=="0" && words[1]=="0" && words[2]=="0") {
+							if(time==0) {
+								break;
+							}
+							else {
+								// TODO: set all fields to be initiale values
+								System.out.println("Creating new record");
+								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
+								 
+							}
+						}
+						for (String x : words)
+							System.out.print(x + " ");
+						
+						// add all of fields to aggregate sum
+						System.out.println();
+						line = reader.readLine();
+						if (line == null) {
+							System.out.println("Creating new record, EOF");
+							a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
+							break;	
+						}
+						words = line.split(",");
+
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.exit(-1);
+
+				}
+				System.out.println("You chose " + filename);
+			}
+
 		});
 	}
 
