@@ -181,10 +181,13 @@ public class ActivityTrackerGUI extends JFrame {
 					String sdate;// = Long.toString(date);
 					double time = -1;
 					double distance;
-					double altitudeGain;
-					double altitudeLoss;
-					double pace;
-					double calories;
+					double altitudeGain = 0;
+					double altitudeLoss = 0;
+					double altitude = 0;
+					double altitudePast = 0;
+					double altitudeDifference = 0;
+					double pace = 0;
+					double calories = 0;
 					Activity a;
 					
 										
@@ -198,14 +201,19 @@ public class ActivityTrackerGUI extends JFrame {
 						if(words[0].equals("0")) {
 							if(time!=-1) {
 								// TODO: set all fields to be initiale values
+								time = Double.valueOf(words[0]);
+								distance = Double.valueOf(words[1]);
+								sdate = words[2];
 								System.out.println("Creating new record");
-								//a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
 								
+								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
+								altitudeGain = 0;
+								altitudeLoss = 0;
+								altitude = 0;
 							}
 						}
-						time = 2;
-						for (String x : words)
-							System.out.print(x + " ");
+						//for (String x : words)
+						//	System.out.print(x + " ");
 						
 						// add all of fields to aggregate sum
 						System.out.println();
@@ -215,8 +223,17 @@ public class ActivityTrackerGUI extends JFrame {
 							//a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
 							break;	
 						}
+						time = Double.valueOf(words[0]);
 						words = line.split(",");
-
+						altitude = Double.valueOf(words[2]);
+						altitudeDifference = altitude - altitudePast;
+						if (altitudeDifference >= 0) {
+							altitudeGain += altitudeDifference;
+						}
+						else {
+							altitudeLoss += altitudeDifference;
+						}
+						altitudePast = altitude;
 					}
 
 				} catch (Exception e) {
