@@ -41,21 +41,15 @@ public class ActivityData extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(600, 500));
 
         jtActivity.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+            new String [][] {
+               // {"z", "a", "a", "a", "z", "a", "z"},
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+            		 "Date", "Time", "Distance", "AGain", "ALoss", "Pace", "Calories"
             }
         ));
         
-        String[] columnNames = { "Date", "Time", "Distance", "AGain", "ALoss", "Pace", "Calories"};
-        String[][] data = {{ "5/5/2011", "300", "2000", "2.5", "1.5", "6", "300"}};
- 
-        jtActivity = new javax.swing.JTable( data, columnNames);
+   
         jScrollPane1.setViewportView(jtActivity);
         jScrollPane1.setEnabled(true);
 

@@ -13,18 +13,6 @@ import GUI.Panels.UserRegistrationPanel;
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
 
-// NOTE: ROWID is an implicit primary key. You must ask for it specifically in the select command.
-//	sqlite> insert into USER VALUES("henrique_clone", "dosp", "henrique", "password1", "dsakkdlsaklkdsa");
-//	sqlite> select rowid,* from user;
-//	1|henrique|dosp|henrique|password1|dsakkdlsaklkdsa
-//	2|henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
-
-// VS...
-
-//	sqlite> select * from user;
-//	henrique|dosp|henrique|password1|dsakkdlsaklkdsa
-//	henrique_clone|dosp|henrique|password1|dsakkdlsaklkdsa
-
 /**
  * This object acts as a middle man between the GUI and the database
  */
@@ -159,6 +147,7 @@ public class DatabaseProxy {
 
 		// Try to execute the query
 		try {
+			//statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 			statement = connection.createStatement();
 			rs = statement.executeQuery(query);
 		}

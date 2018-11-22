@@ -6,6 +6,8 @@ import java.io.ByteArrayOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.Vector;
+
 import javax.imageio.ImageIO;
 
 /*
@@ -27,9 +29,6 @@ public class Activity implements DBHandler {
 	boolean isValid;
 	DatabaseProxy m;
 
-	/*
-	 * param
-	 */
 	public Activity(DatabaseProxy m, String activityType, String userId, String date, double time, double distance,
 			double altitudeGain, double altitudeLoss, double pace, double caloriesBurned) {
 		this.m = m;
@@ -45,21 +44,52 @@ public class Activity implements DBHandler {
 		this.isValid = this.validate();
 	}
 
-	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE rowid = " + this.userID + ";";
 
-	//public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.userID + ", "
-	//		+ this.date + ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss
-	//		+ ", " + +this.pace + ", " + this.caloriesBurned + ");";
-
+	public Activity(DatabaseProxy m, User u) {
+		this.m = m;
+		this.userID = u.getId();
+	}
 
 	@Override
 	public boolean validate() {
-		String zz = "INSERT INTO ACTIVITY VALUES('" + this.activityType + "', '" + this.userID + "', '" + this.date + "', "
-				+ this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss + ", "
+		String insertQuery = "INSERT INTO ACTIVITY VALUES('" + this.activityType + "', '" + this.userID + "', '" + this.date
+				+ "', " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss + ", "
 				+ +this.pace + ", " + this.caloriesBurned + ");";
-		System.out.println(zz);
-		m.executeUpdate(zz);
+		System.out.println(insertQuery);
+		m.executeUpdate(insertQuery);
 		return true;
+	}
+
+	public String[][] getRecords() {
+		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID + "';";
+		ResultSet rs = m.executeQuery(query);
+
+		Vector<String[]> rowVector = new Vector<>();
+		
+		try {
+			while (rs.next()) {
+				String[] rowString = new String[7];
+				rowString[0] = rs.getString("date");
+				rowString[1] = rs.getString("time");
+				rowString[2] = rs.getString("distance");
+				rowString[3] = rs.getString("altitudeGain");
+				rowString[4] = rs.getString("altitudeLoss");
+				rowString[5] = rs.getString("pace");
+				rowString[6] = rs.getString("caloriesBurned");
+				rowVector.add(rowString);
+			}
+			String[][] rowStrings = new String[rowVector.size()][7];
+
+			for (int i = 0; i < rowVector.size(); i++)
+				rowStrings[i] = rowVector.get(i);
+
+			return rowStrings;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new String[0][0];
+
 	}
 
 	public String getActivityType() {

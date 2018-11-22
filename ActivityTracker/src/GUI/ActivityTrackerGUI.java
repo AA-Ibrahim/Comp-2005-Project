@@ -1,26 +1,26 @@
 package GUI;
 
-import GUI.Panels.ActivityData;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FileDialog;
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+import javax.swing.JFrame;
+import javax.swing.JTable;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
+
 import Data.Activity;
 import Data.DatabaseProxy;
 import Data.User;
+import GUI.Panels.ActivityData;
 import GUI.Panels.ContextPanel;
 import GUI.Panels.MyDevicesPanel;
 import GUI.Panels.StatusPanel;
 import GUI.Panels.UserDetailsPanel;
 import GUI.Panels.UserLoginPanel;
 import GUI.Panels.UserRegistrationPanel;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FileDialog;
-import java.awt.Image;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Date;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 /*
 	COMP 2005 Group Project
@@ -164,43 +164,36 @@ public class ActivityTrackerGUI extends JFrame {
 		myDevices.addImportListener(ae -> {
 			JFrame j = (JFrame) SwingUtilities.getWindowAncestor((Component) ae.getSource());
 			FileDialog fd = new FileDialog(j, "Test", FileDialog.LOAD);
-			// new FileDialog(this, "Choose a file", FileDialog.LOAD);
-			// fd.setDirectory("C:\\");
 			fd.setFile("*.csv");
 			fd.setVisible(true);
 			String filename = fd.getFile();
 			if (filename == null) {
-				System.out.println("You cancelled the choice");
+				status.setStatus("You cancelled the choice");
 			} else {
 				BufferedReader reader;
 				try {
 					User u = userDetails.getUser();
 					String userid = u.getId();
 					String activityType = "run";
-					long date = 0;// = (long) new Date().getTime();
 					String sdate = "";// = Long.toString(date);
 					double time = -1;
 					double distance = 0;
-					double altitudeGain= 0;
-					double altitudeLoss=0;
-					double pace=0;
-					double calories=0;
+					double altitudeGain = 0;
+					double altitudeLoss = 0;
+					double pace = 0;
+					double calories = 0;
 					double altitude = 0;
 					double altitudePast = 0;
 					double altitudeDifference = 0;
-					Activity a;
-					
-										
-					reader = new BufferedReader(new FileReader(fd.getDirectory() + "/" + fd.getFile()));			
-					
+
+					reader = new BufferedReader(new FileReader(fd.getDirectory() + "/" + fd.getFile()));
+
 					String line = reader.readLine();
 					String[] words = line.split(",");
-					
-					
+					Activity a;
 					while (true) {
-						if(words[0].equals("0")) {
-							if(time!=-1) {
-								// TODO: set all fields to be initiale values
+						if (words[0].equals("0")) {
+							if (time != -1) {
 								System.out.println("Creating new record");
 								time = Double.valueOf(words[0]);
 								distance = Double.valueOf(words[1]);
@@ -215,24 +208,22 @@ public class ActivityTrackerGUI extends JFrame {
 
 								System.out.println("Creating new record");
 								System.out.println(databaseProxy);
-								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
-								
+								a = new Activity(databaseProxy, activityType, userid, sdate, time, distance,
+										altitudeGain, altitudeLoss, pace, calories);
+
 								altitudeGain = 0;
 								altitudeLoss = 0;
 								altitude = 0;
 							}
 						}
-						//for (String x : words)
-						//	System.out.print(x + " ");
-						
-						// add all of fields to aggregate sum
+
 						System.out.println();
 						line = reader.readLine();
 						if (line == null) {
 							time = Double.valueOf(words[0]);
 							distance = Double.valueOf(words[1]);
 							sdate = words[3];
-							
+
 							System.out.print("date = " + sdate);
 							System.out.print("time = " + time);
 							System.out.print("distance = " + distance);
@@ -242,10 +233,11 @@ public class ActivityTrackerGUI extends JFrame {
 							System.out.print("calories = " + calories);
 
 							System.out.println("Creating new record");
-							
+
 							System.out.println("Creating new record, EOF");
-							a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
-							break;	
+							a = new Activity(databaseProxy, activityType, userid, sdate, time, distance, altitudeGain,
+									altitudeLoss, pace, calories);
+							break;
 						}
 						time = Double.valueOf(words[0]);
 						words = line.split(",");
@@ -253,8 +245,7 @@ public class ActivityTrackerGUI extends JFrame {
 						altitudeDifference = altitude - altitudePast;
 						if (altitudeDifference >= 0) {
 							altitudeGain += altitudeDifference;
-						}
-						else {
+						} else {
 							altitudeLoss += altitudeDifference;
 						}
 						altitudePast = altitude;
@@ -265,8 +256,8 @@ public class ActivityTrackerGUI extends JFrame {
 					System.exit(-1);
 
 				}
-				System.out.println("You chose " + filename);
-				
+				System.out.println("Import successful.");
+
 			}
 			this.changeToActivityLayout();
 		});
@@ -290,11 +281,26 @@ public class ActivityTrackerGUI extends JFrame {
 	// Changes the frame to reflect the activity layout
 	private void changeToActivityLayout() {
 		framePreInitialize();
+		updateTable();
 		add(activityData, BorderLayout.WEST);
 		add(context, BorderLayout.EAST);
 		context.changeState(ContextPanel.ACTIVITY);
 		setSize(1024, 768);
 		framePostInitialize();
+	}
+
+	// This should probably be somewhere else?
+	private void updateTable() {
+		JTable jtActivity = activityData.getTable();
+		String[][] data = new Activity(databaseProxy, userDetails.getUser()).getRecords();
+		DefaultTableModel dm = (DefaultTableModel) jtActivity.getModel();
+		dm.setRowCount(0);
+		for (String[] rowData : data)
+			dm.addRow(rowData);
+		activityData.setJTable(jtActivity);
+		jtActivity.setAutoCreateRowSorter(true);
+		dm.fireTableDataChanged();
+		jtActivity.repaint();
 	}
 
 	// Changes the frame to the import activity layout
