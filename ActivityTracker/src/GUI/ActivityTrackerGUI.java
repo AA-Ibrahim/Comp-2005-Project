@@ -206,7 +206,7 @@ public class ActivityTrackerGUI extends JFrame {
 					File file = new File("../ActivityTracker/src/Data/input2.csv");
 					FileInputStream is2=new FileInputStream(file);
 					SequenceInputStream is=new SequenceInputStream(is1, is2);
-					reader = new BufferedReader(new InputStreamReader(is));
+					reader = new BufferedReader(new InputStreamReader(is, charset));
 					String line = reader.readLine();
 					
 						
