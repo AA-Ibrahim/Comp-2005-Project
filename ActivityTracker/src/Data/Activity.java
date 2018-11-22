@@ -47,18 +47,18 @@ public class Activity implements DBHandler {
 
 	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE rowid = " + this.userID + ";";
 
-	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.userID + ", "
-			+ this.date + ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss
-			+ ", " + +this.pace + ", " + this.caloriesBurned + ");";
+	//public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.userID + ", "
+	//		+ this.date + ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss
+	//		+ ", " + +this.pace + ", " + this.caloriesBurned + ");";
 
 
 	@Override
 	public boolean validate() {
-		String zz = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.userID + ", " + this.date + ", "
+		String zz = "INSERT INTO ACTIVITY VALUES('" + this.activityType + "', '" + this.userID + "', '" + this.date + "', "
 				+ this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss + ", "
 				+ +this.pace + ", " + this.caloriesBurned + ");";
 		System.out.println(zz);
-		m.executeUpdate(this.INSERT_ACTIVITY);
+		m.executeUpdate(zz);
 		return true;
 	}
 

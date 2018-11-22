@@ -205,7 +205,6 @@ public class ActivityTrackerGUI extends JFrame {
 								time = Double.valueOf(words[0]);
 								distance = Double.valueOf(words[1]);
 								sdate = words[3];
-								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);								
 								System.out.print("date = " + sdate);
 								System.out.print("time = " + time);
 								System.out.print("distance = " + distance);
@@ -215,7 +214,7 @@ public class ActivityTrackerGUI extends JFrame {
 								System.out.print("calories = " + calories);
 
 								System.out.println("Creating new record");
-								
+								System.out.println(databaseProxy);
 								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
 								
 								altitudeGain = 0;
