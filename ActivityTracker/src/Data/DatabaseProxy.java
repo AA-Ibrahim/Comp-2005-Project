@@ -163,29 +163,5 @@ public class DatabaseProxy {
 		return rs;
 	}
 
-	/**
-	 * Main method, used for testing and debugging. Not intended to be used in
-	 * production
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
 
-		// Delete our test db if it exists
-		try {
-			Files.deleteIfExists(Paths.get("test2.db"));
-		}
-
-		catch (IOException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
-		
-		DatabaseProxy databaseProxy = new DatabaseProxy("test2.db");
-		databaseProxy.close();
-		databaseProxy.connect("test2.db");
-		databaseProxy.executeUpdate(DatabaseProxy.CREATE_USER_TABLE_QUERY);
-		databaseProxy.executeUpdate(DatabaseProxy.CREATE_ACTIVITY_TABLE_QUERY);
-		databaseProxy.close();
-	}
 }
