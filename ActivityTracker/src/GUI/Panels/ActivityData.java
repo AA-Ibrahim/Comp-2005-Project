@@ -1,5 +1,6 @@
 package GUI.Panels;
 
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /*
@@ -11,18 +12,17 @@ import javax.swing.JTable;
 
 public class ActivityData extends javax.swing.JPanel {
 
-    public ActivityData() {
-        initComponents();
-    }
-    
-    public JTable getTable() {
-    	return jtActivity;
-    }
-    
-    public void setJTable(JTable jt) {
-    	this.jtActivity = jt;
-    }
+	public ActivityData() {
+		initComponents();
+	}
 
+	public JTable getTable() {
+		return jtActivity;
+	}
+
+	public void setJTable(JTable jt) {
+		this.jtActivity = jt;
+	}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,62 +34,27 @@ public class ActivityData extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtActivity = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        jColorChooser1 = new javax.swing.JColorChooser();
 
-        setBorder(javax.swing.BorderFactory.createTitledBorder("Activity Data"));
-        setPreferredSize(new java.awt.Dimension(600, 500));
+        setLayout(new java.awt.BorderLayout());
 
         jtActivity.setModel(new javax.swing.table.DefaultTableModel(
-            new String [][] {
-               // {"z", "a", "a", "a", "z", "a", "z"},
+            new Object [][] {
+                {null, null, null, null, null, null, null},
+                
             },
             new String [] {
-            		 "Date", "Time", "Distance", "AGain", "ALoss", "Pace", "Calories"
+                "Date", "Time", "Distance", "Alt. Gain", "Alt. Loss", "Pace", "Calories"
             }
         ));
-        
-   
+        this.setPreferredSize(new java.awt.Dimension(800, 400));
         jScrollPane1.setViewportView(jtActivity);
-        jScrollPane1.setEnabled(true);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jColorChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        add(jScrollPane1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>                        
 
 
     // Variables declaration - do not modify                     
-    private javax.swing.JTable jtActivity;
-    private javax.swing.JColorChooser jColorChooser1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jtActivity;
     // End of variables declaration                   
 }
