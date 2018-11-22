@@ -40,6 +40,8 @@ public class Activity implements DBHandler {
 		this.altitudeGain = altitudeGain;
 		this.altitudeLoss = altitudeLoss;
 		this.date = date;
+		this.pace = pace;
+		this.caloriesBurned = caloriesBurned;
 		this.isValid = this.validate();
 	}
 
@@ -48,6 +50,7 @@ public class Activity implements DBHandler {
 	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.userID + ", "
 			+ this.date + ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss
 			+ ", " + +this.pace + ", " + this.caloriesBurned + ");";
+
 
 	@Override
 	public boolean validate() {

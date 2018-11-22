@@ -185,6 +185,9 @@ public class ActivityTrackerGUI extends JFrame {
 					double altitudeLoss=0;
 					double pace=0;
 					double calories=0;
+					double altitude = 0;
+					double altitudePast = 0;
+					double altitudeDifference = 0;
 					Activity a;
 					
 										
@@ -199,24 +202,63 @@ public class ActivityTrackerGUI extends JFrame {
 							if(time!=-1) {
 								// TODO: set all fields to be initiale values
 								System.out.println("Creating new record");
+								time = Double.valueOf(words[0]);
+								distance = Double.valueOf(words[1]);
+								sdate = words[3];
+								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);								
+								System.out.print("date = " + sdate);
+								System.out.print("time = " + time);
+								System.out.print("distance = " + distance);
+								System.out.print("altitudeGain = " + altitudeGain);
+								System.out.print("altitudeLoss = " + altitudeLoss);
+								System.out.print("pace = " + pace);
+								System.out.print("calories = " + calories);
+
+								System.out.println("Creating new record");
+								
 								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
 								
+								altitudeGain = 0;
+								altitudeLoss = 0;
+								altitude = 0;
 							}
 						}
-						time = 2;
-						for (String x : words)
-							System.out.print(x + " ");
+						//for (String x : words)
+						//	System.out.print(x + " ");
 						
 						// add all of fields to aggregate sum
 						System.out.println();
 						line = reader.readLine();
 						if (line == null) {
+							time = Double.valueOf(words[0]);
+							distance = Double.valueOf(words[1]);
+							sdate = words[3];
+							
+							System.out.print("date = " + sdate);
+							System.out.print("time = " + time);
+							System.out.print("distance = " + distance);
+							System.out.print("altitudeGain = " + altitudeGain);
+							System.out.print("altitudeLoss = " + altitudeLoss);
+							System.out.print("pace = " + pace);
+							System.out.print("calories = " + calories);
+
+							System.out.println("Creating new record");
+							
 							System.out.println("Creating new record, EOF");
 							a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
 							break;	
 						}
+						time = Double.valueOf(words[0]);
 						words = line.split(",");
-
+						altitude = Double.valueOf(words[2]);
+						altitudeDifference = altitude - altitudePast;
+						if (altitudeDifference >= 0) {
+							altitudeGain += altitudeDifference;
+						}
+						else {
+							altitudeLoss += altitudeDifference;
+						}
+						altitudePast = altitude;
 					}
 
 				} catch (Exception e) {
