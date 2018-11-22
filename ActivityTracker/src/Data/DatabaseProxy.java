@@ -50,8 +50,8 @@ public class DatabaseProxy {
 			+ " password	TEXT NOT NULL," + " image		BLOB" + ");";
 
 	private static final String CREATE_ACTIVITY_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS ACTIVITY  ("
-			+ " activityType	TEXT NOT NULL, " + " userID	TEXT NOT NULL, "  + " time	REAL," 
-			+ " distance	REAL," + " altitude	REAL" + " date	TEXT NOT NULL" + ");";
+			+ " activityType	TEXT NOT NULL, " + " userID	TEXT NOT NULL, " + " date	TEXT," + " time	REAL," 
+			+ " distance	REAL," + " altitudeGain	REAL,"  + " altitudeLoss	REAL," + " pace	REAL," + " caloriesBurned	REAL" + ");";
 
 	/**
 	 * This constructor creates this object, and connects to a database specified by

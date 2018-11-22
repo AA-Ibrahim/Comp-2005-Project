@@ -41,7 +41,6 @@ public class User implements DBHandler {
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		// this.image = null;
 		this.isValid = this.validate();
 	}
 
