@@ -5,7 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Vector;
 
 import javax.imageio.ImageIO;
@@ -19,7 +21,7 @@ public class Activity implements DBHandler {
 
 	String activityType;
 	String userID;
-	String date;
+	long date;
 	Double time;
 	Double distance;
 	Double altitudeGain;
@@ -29,7 +31,7 @@ public class Activity implements DBHandler {
 	boolean isValid;
 	DatabaseProxy m;
 
-	public Activity(DatabaseProxy m, String activityType, String userId, String date, double time, double distance,
+	public Activity(DatabaseProxy m, String activityType, String userId, long date, double time, double distance,
 			double altitudeGain, double altitudeLoss, double pace, double caloriesBurned) {
 		this.m = m;
 		this.activityType = activityType;
@@ -52,9 +54,9 @@ public class Activity implements DBHandler {
 
 	@Override
 	public boolean validate() {
-		String insertQuery = "INSERT INTO ACTIVITY VALUES('" + this.activityType + "', '" + this.userID + "', '" + this.date
-				+ "', " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss + ", "
-				+ +this.pace + ", " + this.caloriesBurned + ");";
+		String insertQuery = "INSERT INTO ACTIVITY VALUES('" + this.activityType + "', '" + this.userID + "', " + this.date
+				+ ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss + ", "
+				+ this.pace + ", " + this.caloriesBurned + ");";
 		System.out.println(insertQuery);
 		m.executeUpdate(insertQuery);
 		return true;
@@ -65,11 +67,15 @@ public class Activity implements DBHandler {
 		ResultSet rs = m.executeQuery(query);
 
 		Vector<String[]> rowVector = new Vector<>();
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date ddate;
+		long ldate;
 		try {
 			while (rs.next()) {
 				String[] rowString = new String[7];
-				rowString[0] = rs.getString("date");
+				ldate = Long.valueOf(rs.getString("date"));
+				ddate = new Date(ldate);
+				rowString[0] = sdf.format(ddate);
 				rowString[1] = rs.getString("time");
 				rowString[2] = rs.getString("distance");
 				rowString[3] = rs.getString("altitudeGain");
@@ -108,11 +114,11 @@ public class Activity implements DBHandler {
 		this.userID = userID;
 	}
 
-	public String getDate() {
+	public long getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 
