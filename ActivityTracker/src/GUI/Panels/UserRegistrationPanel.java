@@ -61,7 +61,7 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
 
         jLabel4.setText("Email");
 
-        jLabel5.setText("Desired Username");
+        jLabel5.setText("Username");
 
         jbCreateAccount.setText("Create Account");
 
@@ -81,7 +81,7 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel3)
+                            
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
@@ -89,7 +89,7 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                             .addComponent(jtfEmail)
-                            .addComponent(jtfBirthday)
+                            
                             .addComponent(jtfLastname)
                             .addComponent(jtfFirstname)
                             .addComponent(jtfPassword)))
@@ -107,9 +107,7 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
                     .addComponent(jLabel2)
                     .addComponent(jtfLastname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jtfBirthday, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)

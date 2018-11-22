@@ -280,7 +280,6 @@ public class ActivityTrackerGUI extends JFrame {
 		add(activityData, BorderLayout.WEST);
 		add(context, BorderLayout.EAST);
 		context.changeState(ContextPanel.ACTIVITY);
-		setSize(1024, 768);
 		framePostInitialize();
 	}
 

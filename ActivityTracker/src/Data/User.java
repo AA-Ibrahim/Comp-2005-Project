@@ -61,19 +61,6 @@ public class User implements DBHandler {
 		this.isValid = validate();
 	}
 
-	// From old interface, can't find a use for it
-	// public boolean writeToDB() {
-	// return false;
-	// }
-
-	public final String VALIDATE_USER_QUERY = "SELECT rowid, * FROM USER " + "WHERE username = " + this.username + ", "
-			+ "WHERE password = " + this.password + ";";
-
-	public final String INSERT_USER_QUERY = "INSERT INTO USER VALUES(" + this.firstName + ", " + this.lastName + ", "
-			+ this.username + ", " + this.password + ", " + encodedImage + ");";
-	
-	//public final String VALIDATE_USERNAME = "SELECT rowid FROM USER WHERE username = " + 
-
 	/**
 	 * Validation function for this object's current instance against the database.
 	 * 
@@ -86,36 +73,37 @@ public class User implements DBHandler {
 	 * @return true or false, depending if the user is valid in the db
 	 */
 	public boolean validate() {
+
 		// CASE 1: If we are validating an existing user, the firstName will be null
 		if (this.firstName == null) {
+
+			// Build the query
 			String query = "SELECT rowid, * FROM USER " + "WHERE username = '" + this.username + "' "
 					+ "AND password = '" + this.password.hashCode() + "';";
 
 			// Run the query
 			ResultSet rs = m.executeQuery(query);
-			
+
 			// There were no rows
 			try {
-				if(rs.next() == false) { return false; }
-			} catch (SQLException e1) {
-				e1.printStackTrace();
+				if (!rs.next())
+					return false;
+			} catch (Exception e) {
+				e.printStackTrace();
 				System.exit(-1);
-
 			}
 
 			// Try to set the class fields from the first row of the query
 			// result
-			try {				
+			try {
 				this.setId(rs.getString("rowid"));
 				this.setFirstName(rs.getString("firstName"));
 				this.setLastName(rs.getString("lastName"));
 				this.setUsername(rs.getString("username"));
-
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				System.exit(-1);
 			}
-			
 
 			// If the class field ID is not null, the we have a valid user
 			if (this.getId() != null) {
@@ -127,15 +115,6 @@ public class User implements DBHandler {
 		}
 
 		// CASE 2: We are creating a user
-
-		// Ugly hack to store image into a string
-		// DOESNT WORK, FIX LATER
-		// ByteArrayOutputStream os = new ByteArrayOutputStream();
-		// ImageIO.write(image, "png", os);
-		// String encodedImage = new String(Base64.getEncoder().encodeToString(os))
-		String encodedImage = "null";
-		// byte[] b = encodedImage.getBytes();
-		
 		// Try to add this user to the db
 		String query = "INSERT INTO USER VALUES('" + this.firstName + "', '" + this.lastName + "', " + "'"
 				+ this.username + "', '" + this.password.hashCode() + "', '" + "null" + "');";
