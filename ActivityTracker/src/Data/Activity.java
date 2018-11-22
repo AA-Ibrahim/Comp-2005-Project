@@ -26,11 +26,12 @@ public class Activity implements DBHandler {
 	Double caloriesBurned;
 	boolean isValid;
 	DatabaseProxy m;
-	
+
 	/*
 	 * param
 	 */
-	public Activity(DatabaseProxy m, String activityType, String userId, String date, Double time, Double distance, Double altitudeGain, Double altitudeLoss, Double pace, Double caloriesBurned ) {
+	public Activity(DatabaseProxy m, String activityType, String userId, String date, double time, double distance,
+			double altitudeGain, double altitudeLoss, double pace, double caloriesBurned) {
 		this.m = m;
 		this.activityType = activityType;
 		this.userID = userId;
@@ -44,162 +45,106 @@ public class Activity implements DBHandler {
 
 	public final String SHOW_RECORDS = "SELECT rowid, * FROM ACTIVITY " + "WHERE rowid = " + this.userID + ";";
 
-	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " +  this.userID + ", " +
-			 this.date + ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", "  + this.altitudeLoss + ", " + + this.pace + ", " + this.caloriesBurned + ");";
+	public final String INSERT_ACTIVITY = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.userID + ", "
+			+ this.date + ", " + this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss
+			+ ", " + +this.pace + ", " + this.caloriesBurned + ");";
 
-	
+	@Override
+	public boolean validate() {
+		String zz = "INSERT INTO ACTIVITY VALUES(" + this.activityType + ", " + this.userID + ", " + this.date + ", "
+				+ this.time + ", " + this.distance + ", " + this.altitudeGain + ", " + this.altitudeLoss + ", "
+				+ +this.pace + ", " + this.caloriesBurned + ");";
+		System.out.println(zz);
+		m.executeUpdate(this.INSERT_ACTIVITY);
+		return true;
+	}
 
 	public String getActivityType() {
 		return activityType;
 	}
 
-
-
 	public void setActivityType(String activityType) {
 		this.activityType = activityType;
 	}
-
-
 
 	public String getUserID() {
 		return userID;
 	}
 
-
-
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
-
-
 
 	public String getDate() {
 		return date;
 	}
 
-
-
 	public void setDate(String date) {
 		this.date = date;
 	}
-
-
 
 	public Double getTime() {
 		return time;
 	}
 
-
-
 	public void setTime(Double time) {
 		this.time = time;
 	}
-
-
 
 	public Double getDistance() {
 		return distance;
 	}
 
-
-
 	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
-
-
 
 	public Double getAltitudeGain() {
 		return altitudeGain;
 	}
 
-
-
 	public void setAltitudeGain(Double altitudeGain) {
 		this.altitudeGain = altitudeGain;
 	}
-
-
 
 	public Double getAltitudeLoss() {
 		return altitudeLoss;
 	}
 
-
-
 	public void setAltitudeLoss(Double altitudeLoss) {
 		this.altitudeLoss = altitudeLoss;
 	}
-
-
 
 	public Double getPace() {
 		return pace;
 	}
 
-
-
 	public void setPace(Double pace) {
 		this.pace = pace;
 	}
-
-
 
 	public Double getCaloriesBurned() {
 		return caloriesBurned;
 	}
 
-
-
 	public void setCaloriesBurned(Double caloriesBurned) {
 		this.caloriesBurned = caloriesBurned;
 	}
-
-
 
 	public boolean isValid() {
 		return isValid;
 	}
 
-
-
 	public void setValid(boolean isValid) {
 		this.isValid = isValid;
 	}
-
-
 
 	public DatabaseProxy getM() {
 		return m;
 	}
 
-
-
 	public void setM(DatabaseProxy m) {
 		this.m = m;
 	}
 
-
-
-	@Override
-	public boolean validate() {
-		// TODO Auto-generated method stub
-		// Run the query
-		ResultSet rs = m.executeQuery(SHOW_RECORDS);
-		// There were no rows
-		try {
-			if(rs.next() == false) { 
-				System.out.println("No Records Exist");
-				return false; 
-				}
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-			System.exit(-1);
-
-		}
-		System.out.print("There were records");
-		return true;
-	}
-
-	
 }

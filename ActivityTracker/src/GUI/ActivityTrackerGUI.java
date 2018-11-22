@@ -177,14 +177,14 @@ public class ActivityTrackerGUI extends JFrame {
 					User u = userDetails.getUser();
 					String userid = u.getId();
 					String activityType = "run";
-					long date;// = (long) new Date().getTime();
-					String sdate;// = Long.toString(date);
+					long date = 0;// = (long) new Date().getTime();
+					String sdate = "";// = Long.toString(date);
 					double time = -1;
-					double distance;
-					double altitudeGain;
-					double altitudeLoss;
-					double pace;
-					double calories;
+					double distance = 0;
+					double altitudeGain= 0;
+					double altitudeLoss=0;
+					double pace=0;
+					double calories=0;
 					Activity a;
 					
 										
@@ -199,7 +199,7 @@ public class ActivityTrackerGUI extends JFrame {
 							if(time!=-1) {
 								// TODO: set all fields to be initiale values
 								System.out.println("Creating new record");
-								//a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
+								a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);
 								
 							}
 						}
@@ -212,7 +212,7 @@ public class ActivityTrackerGUI extends JFrame {
 						line = reader.readLine();
 						if (line == null) {
 							System.out.println("Creating new record, EOF");
-							//a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
+							a = new Activity(databaseProxy, activityType, userid, sdate,  time, distance, altitudeGain, altitudeLoss, pace, calories);						
 							break;	
 						}
 						words = line.split(",");
