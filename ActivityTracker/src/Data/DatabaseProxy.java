@@ -1,12 +1,6 @@
 package Data;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
-import java.util.ArrayList;
-
-import GUI.Panels.UserRegistrationPanel;
 
 /*
 	COMP 2005 Group Project
@@ -19,9 +13,9 @@ import GUI.Panels.UserRegistrationPanel;
 
 public class DatabaseProxy {
 
-	String databaseFileName;
-	Connection connection;
-	Statement statement;
+	private String databaseFileName;
+	private Connection connection;
+	private Statement statement;
 
 	/**
 	 * This is the default constructor. it simply initializes the class fields to
@@ -61,7 +55,7 @@ public class DatabaseProxy {
 	 * 
 	 * @param fname This is the name of the local file that has the database.
 	 */
-	void connect(String fname) {
+	private void connect(String fname) {
 		// Open the connection to the database
 		try {
 			Class.forName("org.sqlite.JDBC");
@@ -77,7 +71,7 @@ public class DatabaseProxy {
 	 * Closes the connection to the database.
 	 */
 	void close() {
-
+		// TODO: This function is currently unused
 		// If we aren't actually connected to a db, then nothing to do.
 		if (connection == null) {
 			return;
@@ -162,6 +156,4 @@ public class DatabaseProxy {
 		System.out.println("Query '" + query + "' successful.");
 		return rs;
 	}
-
-
 }
