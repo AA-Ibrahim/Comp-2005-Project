@@ -80,7 +80,31 @@ public class ActivityTrackerGUI extends JFrame {
 	}
 
 	// Initialize panel listeners
-	private void initializePanelListeners() {
+	private void initializePanelListeners() {		
+		//////////////////////////////////////////////////////////////////////
+		// Listeners for the Context panel
+		// Range Button Listener
+		// ....
+		context.addRangeListener(ae -> {
+			Date a1 = context.getRange1();
+			Date a2 = context.getRange2();
+		});
+		userDetails.addLogoutListener(ae -> {
+			userDetails.setUser(null);
+			userLogin.clearFields(); // remove the password
+			changeToSigninLayout();
+		});
+		// Logout Button Listener
+		// Logs out current user
+		userDetails.addImportDataListener(ae -> {
+			changeToImportLayout();
+		});
+		// MyActivity Button Listener
+		// Switches to my activity
+		userDetails.addMyActivityListener(ae -> {
+			changeToActivityLayout();
+		});
+		
 		//////////////////////////////////////////////////////////////////////
 		// Listeners for the UserLogin panel
 		// Logout Button Listener
