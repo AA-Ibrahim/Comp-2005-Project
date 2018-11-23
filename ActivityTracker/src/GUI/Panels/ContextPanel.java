@@ -49,7 +49,7 @@ public class ContextPanel extends javax.swing.JPanel {
        	properties.put("text.today", "Today");
        	model2 = new UtilDateModel();
        	datePanel2 = new JDatePanelImpl(model2,properties);
-       	datePicker2 = new JDatePickerImpl(datePanel, new DateComponentFormatter());
+       	datePicker2 = new JDatePickerImpl(datePanel2, new DateComponentFormatter());
 
     	properties.put("text.month", "Month");
     	properties.put("text.year", "Year");
