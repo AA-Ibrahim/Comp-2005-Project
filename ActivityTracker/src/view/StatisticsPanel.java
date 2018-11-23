@@ -1,4 +1,4 @@
-package GUI.Panels;
+package view;
 
 /*
 

@@ -1,4 +1,4 @@
-package Data;
+package model;
 
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;

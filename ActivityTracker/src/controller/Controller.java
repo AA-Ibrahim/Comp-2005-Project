@@ -1,4 +1,4 @@
-package GUI;
+package controller;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -19,23 +19,23 @@ import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
-import Data.Activity;
-import Data.DatabaseProxy;
-import Data.User;
-import GUI.Panels.ActivityData;
-import GUI.Panels.ContextPanel;
-import GUI.Panels.MyDevicesPanel;
-import GUI.Panels.StatusPanel;
-import GUI.Panels.UserDetailsPanel;
-import GUI.Panels.UserLoginPanel;
-import GUI.Panels.UserRegistrationPanel;
+import model.Activity;
+import model.DatabaseProxy;
+import model.User;
+import view.ActivityData;
+import view.ContextPanel;
+import view.MyDevicesPanel;
+import view.StatusPanel;
+import view.UserDetailsPanel;
+import view.UserLoginPanel;
+import view.UserRegistrationPanel;
 
 /*
 	COMP 2005 Group Project
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
 
-public class ActivityTrackerGUI extends JFrame {
+public class Controller extends JFrame {
 
 	private static final long serialVersionUID = 7637719486842764464L;
 	private UserDetailsPanel userDetails;
@@ -50,7 +50,7 @@ public class ActivityTrackerGUI extends JFrame {
 	/**
 	 * Constructor for the GUI
 	 */
-	public ActivityTrackerGUI() {
+	public Controller() {
 		initializeFields();
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,7 +88,15 @@ public class ActivityTrackerGUI extends JFrame {
 		context.addRangeListener(ae -> {
 			Date a1 = context.getRange1();
 			Date a2 = context.getRange2();
-			changeToActivityLayout(a1, a2);
+			
+			// If no start date specified, choose the beginning of the epoch
+			if(a1==null) { a1 = new Date(0); }
+			
+			// If no end date specified, choose the end of time
+			if(a2==null) { a2 = new Date(Long.MAX_VALUE); }
+			
+			// Fix date range
+			changeToActivityLayout((a1.compareTo(a2) < 0)?a1:a2, (a1.compareTo(a2)<0)?a2:a1);
 		});
 		
 		/////////////////////////////////////////////////////////////////////
@@ -216,7 +224,7 @@ public class ActivityTrackerGUI extends JFrame {
 					// Necessary evil to make format file to our specification
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					FileInputStream is1=new FileInputStream(fd.getDirectory() + "/" + fd.getFile());
-					File file = new File("../ActivityTracker/src/Data/input2.csv");
+					File file = new File("../ActivityTracker/src/model/input2.csv");
 					FileInputStream is2=new FileInputStream(file);
 					SequenceInputStream is=new SequenceInputStream(is1, is2);
 					reader = new BufferedReader(new InputStreamReader(is, charset));

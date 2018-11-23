@@ -1,5 +1,6 @@
 import javax.swing.SwingUtilities;
-import GUI.ActivityTrackerGUI;
+
+import controller.Controller;
 
 /*
 	COMP 2005 Group Project
@@ -21,7 +22,7 @@ public class Application {
 
 	        SwingUtilities.invokeLater(new Runnable() {
 	            public void run() {
-	                new ActivityTrackerGUI().setVisible(true);
+	                new Controller().setVisible(true);
 	            }
 	        });
 	    }
