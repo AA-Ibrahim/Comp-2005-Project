@@ -206,16 +206,9 @@ public class ActivityTrackerGUI extends JFrame {
 					String activityType = "run";
 					String sdate = "";// = Long.toString(date);
 					Date ddate;
-					long date = 0;
-					double time = 0;
-					double distance = 0;
-					double altitudeGain = 0;
-					double altitudeLoss = 0;
-					double pace = 0;
-					double calories = 0;
-					double altitude = 0;
-					double altitudePast = 0;
-					double altitudeDifference = 0;
+					long date=0;
+					double time=0, distance=0, altitudeGain=0, altitudeLoss=0, pace=0, 
+							calories=0, altitude=0, altitudePast=0, altitudeDifference=0;
 					int lineNum = 0;
 					String[] words;
 					Activity a;
@@ -250,7 +243,7 @@ public class ActivityTrackerGUI extends JFrame {
 							ddate = sdf.parse(sdate);
 							date = ddate.getTime();
 							pace = Math.round(100.0*distance/time)/100.0;
-							calories = 80 * distance;
+							calories = 80.0*distance;
 							altitudeDifference = altitude - altitudePast;
 							
 							if (altitudeDifference >= 0) {
@@ -307,17 +300,44 @@ public class ActivityTrackerGUI extends JFrame {
 	private void updateTable(Date start, Date end) {
 		JTable jtActivity = activityData.getTable();
 		String[][] data;
+		double totalTime=0, totalDistance=0, totalAltitudeGain=0, totalAltitudeLoss=0, totalPace=0, totalCaloriesBurned=0, numberOfLines=0;
+		double averageTime, averageDistance, averageAltitudeGain, averageAltitudeLoss, averagePace, averageCaloriesBurned;
+		String statistics;
+		
 		if(start==null)
 			data = new Activity(databaseProxy, userDetails.getUser()).getRecords();
 		else {
 			data = new Activity(databaseProxy, userDetails.getUser()).getRecordsFromRange(start, end);
 		}
+		
 		DefaultTableModel dm = (DefaultTableModel) jtActivity.getModel();
 		dm.setRowCount(0);
-		for (String[] rowData : data)
+		for (String[] rowData : data) {
+			totalTime = totalTime + Double.valueOf(rowData[1]);
+			totalDistance = totalDistance + Double.valueOf(rowData[2]);
+			totalAltitudeGain = totalAltitudeGain + Double.valueOf(rowData[3]);
+			totalAltitudeLoss = totalAltitudeLoss + Double.valueOf(rowData[4]);
+			totalPace = totalPace + Double.valueOf(rowData[5]);
+			totalCaloriesBurned = totalCaloriesBurned + Double.valueOf(rowData[6]);
+			numberOfLines++;
 			dm.addRow(rowData);
+		}
+		averageTime = totalTime /numberOfLines;
+		averageDistance = totalDistance/numberOfLines;
+		averageAltitudeGain = totalAltitudeGain/numberOfLines;
+		averageAltitudeLoss = totalAltitudeLoss/numberOfLines;
+		averagePace = totalPace/numberOfLines;
+		averageCaloriesBurned = totalCaloriesBurned/numberOfLines;
+		
+		statistics = "Avg Time = " + (double) Math.round(100.0*averageTime)/100.0 
+				+ ", Avg Dist = " + (double) Math.round(100.0*averageDistance)/100.0
+				+ ", Avg Alt Gain = " + (double) Math.round(100.0*averageAltitudeGain)/100.0
+				+ ", Avg Alt Loss = " + (double) Math.round(100.0*averageAltitudeLoss)/100.0
+				+ ", Avg Pace = " + (double) Math.round(100.0*averagePace)/100.0
+				+ ", Avg Cal = " + (double) Math.round(100.0*averageCaloriesBurned)/100.0;
+		
 		activityData.setJTable(jtActivity);
-		activityData.setStatistics("hehehe");
+		activityData.setStatistics(statistics);
 		jtActivity.setAutoCreateRowSorter(true);
 		dm.fireTableDataChanged();
 		jtActivity.repaint();
