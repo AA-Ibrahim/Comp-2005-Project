@@ -306,7 +306,6 @@ public class ActivityTrackerGUI extends JFrame {
 		framePostInitialize();
 	}
 
-	//////////////////////////////////////////////////////////////////////
 	// Pre-initialize the frame
 	private void framePreInitialize() {
 		getContentPane().removeAll();

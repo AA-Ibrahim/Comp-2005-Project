@@ -46,7 +46,6 @@ public class Activity implements DBHandler {
 		this.isValid = this.validate();
 	}
 
-
 	public Activity(DatabaseProxy m, User u) {
 		this.m = m;
 		this.userID = u.getId();
