@@ -88,12 +88,10 @@ public class ActivityTrackerGUI extends JFrame {
 		context.addRangeListener(ae -> {
 			Date a1 = context.getRange1();
 			Date a2 = context.getRange2();
+			changeToActivityLayout(a1, a2);
 		});
-		userDetails.addLogoutListener(ae -> {
-			userDetails.setUser(null);
-			userLogin.clearFields(); // remove the password
-			changeToSigninLayout();
-		});
+		
+		/////////////////////////////////////////////////////////////////////
 		// Logout Button Listener
 		// Logs out current user
 		userDetails.addImportDataListener(ae -> {
@@ -102,7 +100,7 @@ public class ActivityTrackerGUI extends JFrame {
 		// MyActivity Button Listener
 		// Switches to my activity
 		userDetails.addMyActivityListener(ae -> {
-			changeToActivityLayout();
+			changeToActivityLayout(null, null);
 		});
 		
 		//////////////////////////////////////////////////////////////////////
@@ -122,7 +120,7 @@ public class ActivityTrackerGUI extends JFrame {
 		// MyActivity Button Listener
 		// Switches to my activity
 		userDetails.addMyActivityListener(ae -> {
-			changeToActivityLayout();
+			changeToActivityLayout(null, null);
 		});
 
 		//////////////////////////////////////////////////////////////////////
@@ -132,7 +130,6 @@ public class ActivityTrackerGUI extends JFrame {
 		userLogin.addCreateAccountListener(ae -> {
 			changeToRegistrationLayout();
 		});
-
 		// "Sign In" Button Listener
 		// Creates a user object
 		userLogin.addSignInListener(ae -> {
@@ -146,7 +143,7 @@ public class ActivityTrackerGUI extends JFrame {
 				// Login is successful
 				userDetails.setUser(u);
 				status.setStatus("Login successful");
-				changeToActivityLayout();
+				changeToActivityLayout(null, null);
 			}
 
 			else {
@@ -162,7 +159,6 @@ public class ActivityTrackerGUI extends JFrame {
 		userRegistration.addSigninListener(ae -> {
 			changeToSigninLayout();
 		});
-
 		// "Create Account" Button listener
 		// Create a user object
 		userRegistration.addCreateAccountListener(ae -> {
@@ -183,7 +179,7 @@ public class ActivityTrackerGUI extends JFrame {
 				// Login is successful
 				userDetails.setUser(u);
 				status.setStatus("Login successful");
-				changeToActivityLayout();
+				changeToActivityLayout(null, null);
 			}
 
 			// Otherwise the user was not valid
@@ -278,7 +274,7 @@ public class ActivityTrackerGUI extends JFrame {
 				System.out.println("Import successful.");
 
 			}
-			this.changeToActivityLayout();
+			this.changeToActivityLayout(null, null);
 		});
 	}
 
@@ -298,9 +294,9 @@ public class ActivityTrackerGUI extends JFrame {
 	}
 
 	// Changes the frame to reflect the activity layout
-	private void changeToActivityLayout() {
+	private void changeToActivityLayout(Date start, Date end) {
 		framePreInitialize();
-		updateTable();
+		updateTable(start, end);
 		add(activityData, BorderLayout.WEST);
 		add(context, BorderLayout.EAST);
 		context.changeState(ContextPanel.ACTIVITY);
@@ -308,9 +304,14 @@ public class ActivityTrackerGUI extends JFrame {
 	}
 
 	// This should probably be somewhere else?
-	private void updateTable() {
+	private void updateTable(Date start, Date end) {
 		JTable jtActivity = activityData.getTable();
-		String[][] data = new Activity(databaseProxy, userDetails.getUser()).getRecords();
+		String[][] data;
+		if(start==null)
+			data = new Activity(databaseProxy, userDetails.getUser()).getRecords();
+		else {
+			data = new Activity(databaseProxy, userDetails.getUser()).getRecordsFromRange(start, end);
+		}
 		DefaultTableModel dm = (DefaultTableModel) jtActivity.getModel();
 		dm.setRowCount(0);
 		for (String[] rowData : data)
