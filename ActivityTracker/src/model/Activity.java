@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 
+import controller.DatabaseProxy;
+
 /*
 	COMP 2005 Group Project
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty

@@ -20,7 +20,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import model.Activity;
-import model.DatabaseProxy;
 import model.User;
 import view.ActivityData;
 import view.ContextPanel;

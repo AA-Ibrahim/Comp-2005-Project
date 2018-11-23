@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Base64;
 import javax.imageio.ImageIO;
 
+import controller.DatabaseProxy;
+
 /*
 	COMP 2005 Group Project
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
@@ -15,13 +17,13 @@ import javax.imageio.ImageIO;
 
 public class User implements DBHandler {
 
-	String username;
-	String id;
-	String password;
-	String firstName;
-	String lastName;
+	private String username;
+	private String id;
+	private String password;
+	private String firstName;
+	private String lastName;
 	boolean isValid;
-	BufferedImage image;
+	private BufferedImage image;
 	DatabaseProxy m;
 	String encodedImage = "no";
 

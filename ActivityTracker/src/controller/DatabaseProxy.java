@@ -1,4 +1,4 @@
-package model;
+package controller;
 
 import java.sql.*;
 
@@ -94,7 +94,7 @@ public class DatabaseProxy {
 	 * 
 	 * @param query This is the SQL update query to run.
 	 */
-	int executeUpdate(String query) {
+	public int executeUpdate(String query) {
 		int affected_rows = 0;
 
 		// Make sure that the database is open
@@ -130,7 +130,7 @@ public class DatabaseProxy {
 	 * @param query This is the SQL statement to run.
 	 * @return A ResultSet for the specified query.
 	 */
-	ResultSet executeQuery(String query) {
+	public ResultSet executeQuery(String query) {
 		ResultSet rs = null;
 		
 		// Check to see if our DB is open
