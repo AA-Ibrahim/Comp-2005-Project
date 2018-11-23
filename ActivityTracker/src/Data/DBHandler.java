@@ -1,6 +1,6 @@
 package Data;
 
-public interface DBHandler {
+interface DBHandler {
 	//boolean writeToDB();
 	boolean validate();
 }

@@ -23,34 +23,36 @@ public class ContextPanel extends javax.swing.JPanel {
     public static final int ACTIVITY = 1;
     public static final int DEVICES = 2;
     
+    private JDatePanelImpl datePanel, datePanel2;
+    private JDatePickerImpl datePicker, datePicker2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jlContextInfo;
+    private javax.swing.JPanel jPanel1;
+    private UtilDateModel model, model2;
+    private JButton ok;
+    private Properties properties;
+    
     public ContextPanel() {
         initComponents();
     }
-
-    public void addRangeListener(ActionListener ae) {
-    	ok.addActionListener(ae);
-    }
     
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+	@SuppressWarnings("unchecked")                        
     private void initComponents() {
-
         jlContextInfo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         ok = new JButton("Get Range");
-
-        
         jlContextInfo = new javax.swing.JLabel();
         properties = new Properties();
         model = new UtilDateModel();
         datePanel = new JDatePanelImpl(model,properties);
         datePicker = new JDatePickerImpl(datePanel, new DateComponentFormatter());
-       	properties.put("text.today", "Today");
        	model2 = new UtilDateModel();
        	datePanel2 = new JDatePanelImpl(model2,properties);
        	datePicker2 = new JDatePickerImpl(datePanel2, new DateComponentFormatter());
+       	properties.put("text.today", "Today");
 
     	properties.put("text.month", "Month");
     	properties.put("text.year", "Year");
@@ -74,39 +76,27 @@ public class ContextPanel extends javax.swing.JPanel {
         jPanel1.add(ok);
 
         add(jPanel1, java.awt.BorderLayout.PAGE_END);
-    }// </editor-fold>                        
-
-
-    // Variables declaration - do not modify                     
-    private JDatePickerImpl datePicker, datePicker2;
-    private Properties properties;
-    private JDatePanelImpl datePanel, datePanel2;
-    private JButton ok;
-    private UtilDateModel model, model2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel jlContextInfo;
-    // End of variables declaration                   
-
+    }                    
+    
+    public void addRangeListener(ActionListener ae) {
+    	ok.addActionListener(ae);
+    }
+    
     public void changeState(int statetype) {
         switch(statetype) {
             case ACTIVITY:
                 jlContextInfo.setText("<html><h2>Your Activity\n<h3>Here's what you have done\n<h3>Details and statistics are on the left");
                 break;
             case DEVICES:
-                jlContextInfo.setText("<html><h2>Import data\n<h3>Choose a device among the supported choices\n<h3>Your activity will be imported.");  
-              
+                jlContextInfo.setText("<html><h2>Import data\n<h3>Choose a device among the supported choices\n<h3>Your activity will be imported.");    
         }
     }
 
-	public Date getRange1() {
-		
+    public Date getRange1() {
 		return model.getValue();
 	}
 
 	public Date getRange2() {
-		return model2.getValue();
-		
+		return model2.getValue();	
 	}
 }
