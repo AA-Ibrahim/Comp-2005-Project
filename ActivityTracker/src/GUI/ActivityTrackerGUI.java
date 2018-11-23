@@ -292,6 +292,7 @@ public class ActivityTrackerGUI extends JFrame {
 		for (String[] rowData : data)
 			dm.addRow(rowData);
 		activityData.setJTable(jtActivity);
+		activityData.setStatistics("hehehe");
 		jtActivity.setAutoCreateRowSorter(true);
 		dm.fireTableDataChanged();
 		jtActivity.repaint();

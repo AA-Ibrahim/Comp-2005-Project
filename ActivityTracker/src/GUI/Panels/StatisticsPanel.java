@@ -14,6 +14,10 @@ public class StatisticsPanel extends javax.swing.JPanel {
     public StatisticsPanel() {
         initComponents();
     }
+    
+    public void updatePanel(String s) {
+    	jTextPane1.setText(s);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,6 +37,8 @@ public class StatisticsPanel extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTextPane1);
 
         add(jScrollPane1);
+        jTextPane1.setText("test\n\n\nterasdfsdfsd");
+        jTextPane1.setEditable(false);
     }// </editor-fold>                        
 
 

@@ -1,5 +1,7 @@
 package GUI.Panels;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -23,6 +25,10 @@ public class ActivityData extends javax.swing.JPanel {
 	public void setJTable(JTable jt) {
 		this.jtActivity = jt;
 	}
+	
+	public void setStatistics(String s) {
+		this.spanel.updatePanel(s);
+	}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,7 +40,7 @@ public class ActivityData extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jtActivity = new javax.swing.JTable();
-
+        spanel = new StatisticsPanel();
         setLayout(new java.awt.BorderLayout());
 
         jtActivity.setModel(new javax.swing.table.DefaultTableModel(
@@ -50,11 +56,13 @@ public class ActivityData extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jtActivity);
 
         add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        add(spanel, BorderLayout.SOUTH);
     }// </editor-fold>                        
 
 
     // Variables declaration - do not modify                     
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtActivity;
+    private StatisticsPanel spanel;
     // End of variables declaration                   
 }
