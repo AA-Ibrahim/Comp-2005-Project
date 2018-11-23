@@ -54,7 +54,7 @@ public class Activity implements DBHandler {
 		long ldate;
 		
 		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID 
-		+ "' AND date BETWEEN " + begin.getTime() + " AND " + end.getTime() + ";";
+		+ "' AND date BETWEEN " + (begin.getTime()-1000*60*24*60) + " AND " + end.getTime() + ";";
 		
 		ResultSet rs = m.executeQuery(query);
 
