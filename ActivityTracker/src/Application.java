@@ -7,6 +7,10 @@ import controller.Controller;
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
 
+/**
+ * This object is the entire application
+*/
+
 public class Application {
 	   public static void main(String[] args) {
 	        try {

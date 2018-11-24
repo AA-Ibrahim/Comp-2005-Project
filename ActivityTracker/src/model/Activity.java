@@ -19,6 +19,21 @@ public class Activity implements DBHandler {
 	private double time, distance, altitudeGain, altitudeLoss, pace, caloriesBurned;
 	private DatabaseProxy m;
 
+	/**
+	 * Use this constructor when creating a new activity object
+	 * 
+	 * @param m         Database proxy object
+	 * @param activityType  Type of activity
+	 * @param userId  Unique ID of the user
+	 * @param date	date of the activity 
+	 * @param time  duration of activity
+	 * @param distance	distance of activity
+	 * @param altitudeGain	total altitude gained during the activity
+	 * @param altitudeLoss	total altitude lost during the activity
+	 * @param pace	total pace of the activity
+	 * @param caloriesBurned	total calories burned during the activity
+	 */
+	
 	public Activity(DatabaseProxy m, String activityType, String userId, long date, double time, double distance,
 			double altitudeGain, double altitudeLoss, double pace, double caloriesBurned) {
 		this.m = m;
@@ -33,6 +48,13 @@ public class Activity implements DBHandler {
 		this.caloriesBurned = caloriesBurned;
 		this.validate();
 	}
+
+	/**
+	 * Use this constructor when creating a new activity object for interacting with database
+	 * 
+	 * @param m         Database proxy object
+	 * @param userId  Unique ID of the user
+	 */
 
 	public Activity(DatabaseProxy m, User u) {
 		this.m = m;
@@ -49,17 +71,20 @@ public class Activity implements DBHandler {
 		return true;
 	}
 	
+	// this method is to get records from database when a range of dates is given
 	public String[][] getRecordsFromRange(Date begin, Date end){
 		Vector<String[]> rowVector = new Vector<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date ddate;
 		long ldate;
 		
+		// necessary query
 		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID 
 		+ "' AND date BETWEEN " + (begin.getTime()-1000*60*24*60) + " AND " + end.getTime() + ";";
 		
 		ResultSet rs = m.executeQuery(query);
 
+		// populate the data with the results of the query
 		try {
 			while (rs.next()) {
 				String[] rowString = new String[7];
@@ -87,14 +112,16 @@ public class Activity implements DBHandler {
 		return new String[0][0];		
 	}
 
+	// this method is used to get all records from the database for a user
 	public String[][] getRecords() {
+		// necessary query
 		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID + "';";
 		ResultSet rs = m.executeQuery(query);
-
 		Vector<String[]> rowVector = new Vector<>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date ddate;
 		long ldate;
+		// populate the data with the results of the query
 		try {
 			while (rs.next()) {
 				String[] rowString = new String[7];
@@ -109,6 +136,7 @@ public class Activity implements DBHandler {
 				rowString[6] = rs.getString("caloriesBurned");
 				rowVector.add(rowString);
 			}
+			
 			String[][] rowStrings = new String[rowVector.size()][7];
 
 			for (int i = 0; i < rowVector.size(); i++)

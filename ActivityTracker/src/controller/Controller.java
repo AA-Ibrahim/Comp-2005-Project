@@ -195,27 +195,28 @@ public class Controller extends JFrame {
 
 			// Otherwise the user was not valid
 			else {
-				// TODO: Use a better error message
-				status.setStatus("Create failed");
+				status.setStatus("Creating User Failed");
 			}
 		});
-
+		// select the file to import data from
 		myDevices.addImportListener(ae -> {
 			JFrame j = (JFrame) SwingUtilities.getWindowAncestor((Component) ae.getSource());
 			FileDialog fd = new FileDialog(j, "Test", FileDialog.LOAD);
 			fd.setFile("*.csv");
 			fd.setVisible(true);
 			String filename = fd.getFile();
+			
+			// if no file selected
 			if (filename == null) {
 				status.setStatus("You cancelled the choice");
 			} else {
+				// read the file
 				BufferedReader reader;
 				try {
+					// initalize variables
 					Charset charset = Charset.forName("UTF-8");
 					User u = userDetails.getUser();
-					String userid = u.getId();
-					String activityType = "run";
-					String sdate = "";// = Long.toString(date);
+					String userid = u.getId(), activityType = "run", sdate = "";
 					Date ddate;
 					long date=0;
 					double time=0, distance=0, altitudeGain=0, altitudeLoss=0, pace=0, 
@@ -224,29 +225,34 @@ public class Controller extends JFrame {
 					String[] words;
 					Activity a;
 
-					// Necessary evil to make format file to our specification
+					// Concatenate file with 0s at the end from input2.csv to ensure there is a visible end to run object
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					FileInputStream is1=new FileInputStream(fd.getDirectory() + "/" + fd.getFile());
 					File file = new File("../ActivityTracker/src/data/input2.csv");
 					FileInputStream is2=new FileInputStream(file);
 					SequenceInputStream is=new SequenceInputStream(is1, is2);
 					reader = new BufferedReader(new InputStreamReader(is, charset));
+					// read the first line
 					String line = reader.readLine();
 					
-						
+					// loop through all lines
 					while (line != null) {
 						
 						words =  line.split(",");
 						
+						// if start of a new run
 						if (words[0].equals("0") && lineNum > 0) {
 
+							// create run object and add to database
 							a = new Activity(databaseProxy, activityType, userid, date, time, distance,
 									altitudeGain, altitudeLoss, pace, calories);
 
+							// reset altitude
 							altitudeGain = 0;
 							altitudeLoss = 0;
 						}
 						else {
+							// set all the values
 							time = Double.valueOf(words[0]);
 							distance = Double.valueOf(words[1]);
 							altitude = Double.valueOf(words[2]);	
@@ -255,6 +261,7 @@ public class Controller extends JFrame {
 							date = ddate.getTime();
 							pace = Math.round(100.0*distance/time)/100.0;
 							calories = 80.0*distance;
+							// calculate altitude difference
 							altitudeDifference = altitude - altitudePast;
 							
 							if (altitudeDifference >= 0) {
@@ -265,6 +272,7 @@ public class Controller extends JFrame {
 							altitudePast = altitude;
 						}
 						
+						// get next line data
 						line = reader.readLine();
 						lineNum++;
 					}
@@ -278,6 +286,7 @@ public class Controller extends JFrame {
 				System.out.println("Import successful.");
 
 			}
+			// refresh activity layout panel
 			this.changeToActivityLayout(null, null);
 		});
 	}
@@ -307,22 +316,26 @@ public class Controller extends JFrame {
 		framePostInitialize();
 	}
 
-	// This should probably be somewhere else?
+	// This method updates the table as well as the statistics panel below
 	private void updateTable(Date start, Date end) {
+		// initialize variables
 		JTable jtActivity = activityData.getTable();
 		String[][] data;
 		double totalTime=0, totalDistance=0, totalAltitudeGain=0, totalAltitudeLoss=0, totalPace=0, totalCaloriesBurned=0, numberOfLines=0;
 		double averageTime, averageDistance, averageAltitudeGain, averageAltitudeLoss, averagePace, averageCaloriesBurned;
 		String statistics;
 		
+		// if given a range, get runs from that range, else get all runs for the user
 		if(start==null)
 			data = new Activity(databaseProxy, userDetails.getUser()).getRecords();
 		else {
 			data = new Activity(databaseProxy, userDetails.getUser()).getRecordsFromRange(start, end);
 		}
 		
+		// populate the table with data
 		DefaultTableModel dm = (DefaultTableModel) jtActivity.getModel();
 		dm.setRowCount(0);
+		// add each run to the table
 		for (String[] rowData : data) {
 			totalTime = totalTime + Double.valueOf(rowData[1]);
 			totalDistance = totalDistance + Double.valueOf(rowData[2]);
@@ -333,6 +346,7 @@ public class Controller extends JFrame {
 			numberOfLines++;
 			dm.addRow(rowData);
 		}
+		// calculate the average results for the statistics
 		averageTime = totalTime /numberOfLines;
 		averageDistance = totalDistance/numberOfLines;
 		averageAltitudeGain = totalAltitudeGain/numberOfLines;
@@ -340,6 +354,7 @@ public class Controller extends JFrame {
 		averagePace = totalPace/numberOfLines;
 		averageCaloriesBurned = totalCaloriesBurned/numberOfLines;
 		
+		// add the values to statistics data
 		statistics = "Avg Time = " + (double) Math.round(100.0*averageTime)/100.0 
 				+ ", Avg Dist = " + (double) Math.round(100.0*averageDistance)/100.0
 				+ ", Avg Alt Gain = " + (double) Math.round(100.0*averageAltitudeGain)/100.0
@@ -347,6 +362,7 @@ public class Controller extends JFrame {
 				+ ", Avg Pace = " + (double) Math.round(100.0*averagePace)/100.0
 				+ ", Avg Cal = " + (double) Math.round(100.0*averageCaloriesBurned)/100.0;
 		
+		// update values to table and refresh
 		activityData.setJTable(jtActivity);
 		activityData.setStatistics(statistics);
 		jtActivity.setAutoCreateRowSorter(true);

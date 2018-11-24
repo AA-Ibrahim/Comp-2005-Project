@@ -8,7 +8,7 @@ import java.sql.*;
 */
 
 /**
- * This object acts as a middle man between the GUI and the database
+ * This object acts as a middle man between the view and the database
  */
 
 public class DatabaseProxy {
@@ -27,6 +27,7 @@ public class DatabaseProxy {
 		statement = null;
 	}
 
+	// SQL queries to create tables
 	private static final String CREATE_USER_TABLE_QUERY = "CREATE TABLE IF NOT EXISTS USER  ("
 			+ " firstName	TEXT NOT NULL, " + " lastName    TEXT NOT NULL," + " username    TEXT NOT NULL,"
 			+ " password	TEXT NOT NULL," + " image		BLOB" + ");";
