@@ -34,6 +34,10 @@ import view.UserRegistrationPanel;
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
 
+/**
+ * This object acts as a middle man between the view and the model
+ */
+
 public class Controller extends JFrame {
 
 	private static final long serialVersionUID = 7637719486842764464L;
@@ -223,7 +227,7 @@ public class Controller extends JFrame {
 					// Necessary evil to make format file to our specification
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					FileInputStream is1=new FileInputStream(fd.getDirectory() + "/" + fd.getFile());
-					File file = new File("../ActivityTracker/src/model/input2.csv");
+					File file = new File("../ActivityTracker/src/data/input2.csv");
 					FileInputStream is2=new FileInputStream(file);
 					SequenceInputStream is=new SequenceInputStream(is1, is2);
 					reader = new BufferedReader(new InputStreamReader(is, charset));
