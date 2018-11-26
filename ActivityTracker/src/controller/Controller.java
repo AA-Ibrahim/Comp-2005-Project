@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import model.Activity;
 import model.User;
-import view.ActivityData;
+import view.ActivityPanel;
 import view.ContextPanel;
 import view.MyDevicesPanel;
 import view.StatusPanel;
@@ -47,7 +47,7 @@ public class Controller extends JFrame {
 	private ContextPanel context;
 	private StatusPanel status;
 	private MyDevicesPanel myDevices;
-	private ActivityData activityData;
+	private ActivityPanel activityData;
 	private DatabaseProxy databaseProxy;
 
 	/**
@@ -75,7 +75,7 @@ public class Controller extends JFrame {
 	private void initializePanels() {
 		userDetails = new UserDetailsPanel();
 		status = new StatusPanel();
-		activityData = new ActivityData();
+		activityData = new ActivityPanel();
 		userLogin = new UserLoginPanel();
 		userRegistration = new UserRegistrationPanel();
 		myDevices = new MyDevicesPanel();

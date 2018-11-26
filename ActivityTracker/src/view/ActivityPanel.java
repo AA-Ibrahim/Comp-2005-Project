@@ -11,13 +11,17 @@ import javax.swing.JTable;
 
 */
 
-public class ActivityData extends javax.swing.JPanel {
+/*
+ * This panel displays the 
+ */
+
+public class ActivityPanel extends javax.swing.JPanel {
 
 	private javax.swing.JScrollPane jScrollPane1;                
     private javax.swing.JTable jtActivity;
 	private StatisticsPanel spanel;
 
-	public ActivityData() {
+	public ActivityPanel() {
 		initComponents();
 	}
 	

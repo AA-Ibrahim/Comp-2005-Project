@@ -19,7 +19,9 @@ import model.Activity;
     A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 
 */
-
+/*
+ * This panel displays the options to import data, with a file manager
+ */
 public class MyDevicesPanel extends javax.swing.JPanel {
 
     private javax.swing.JButton jButton6;

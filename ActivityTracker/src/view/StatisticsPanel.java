@@ -6,6 +6,9 @@ COMP 2005 Group Project
 A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 
 */
+/*
+ * This panel displays the statistics of the run instances
+ */
 public class StatisticsPanel extends javax.swing.JPanel {
 
     private javax.swing.JScrollPane jScrollPane1;

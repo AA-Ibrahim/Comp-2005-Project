@@ -4,7 +4,9 @@ package view;
 	COMP 2005 Group Project
 	A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
-
+/*
+ * This panel displays the status of the user, whether the user is logged in, or if the login or create new user failed
+ */
 public class StatusPanel extends javax.swing.JPanel {
 
     private javax.swing.JLabel jLabel1;

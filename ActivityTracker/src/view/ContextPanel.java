@@ -17,6 +17,9 @@ import org.jdatepicker.impl.UtilDateModel;
     A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 
 */
+/*
+ * This panel contains the context information with the option to select the date ranges of the runs 
+ */
 
 public class ContextPanel extends javax.swing.JPanel {
 

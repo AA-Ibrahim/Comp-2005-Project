@@ -10,7 +10,9 @@ import model.User;
     A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 
 */
-
+/*
+ * This panel displays the main panel to display to the user once he/she has logged in
+ */
 public class UserDetailsPanel extends javax.swing.JPanel {
 	private javax.swing.JButton jbEditProfile;
 	private javax.swing.JButton jbImportData;

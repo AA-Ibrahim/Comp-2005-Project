@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
     COMP 2005 Group Project
     A. Ibrahim, H. Dos Prazeres, S. Parson, V. Nagisetty
 */
-
+/*
+ * This panel displays the log in information
+ */
 public class UserLoginPanel extends javax.swing.JPanel {
     private javax.swing.JButton jbCreateAccount;
     private javax.swing.JButton jbSignin;
