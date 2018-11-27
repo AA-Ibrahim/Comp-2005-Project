@@ -74,13 +74,13 @@ public class Activity implements DBHandler {
 	// this method is to get records from database when a range of dates is given
 	public String[][] getRecordsFromRange(Date begin, Date end){
 		Vector<String[]> rowVector = new Vector<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date ddate;
 		long ldate;
 		
 		// necessary query
 		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID 
-		+ "' AND date BETWEEN " + (begin.getTime()-1000*60*24*60) + " AND " + end.getTime() + ";";
+		+ "' AND date BETWEEN " + (begin.getTime()-1000*60*60*24) + " AND " + (end.getTime()) + ";";
 		
 		ResultSet rs = m.executeQuery(query);
 
@@ -118,7 +118,7 @@ public class Activity implements DBHandler {
 		String query = "SELECT * FROM ACTIVITY " + "WHERE userid = '" + this.userID + "';";
 		ResultSet rs = m.executeQuery(query);
 		Vector<String[]> rowVector = new Vector<>();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date ddate;
 		long ldate;
 		// populate the data with the results of the query

@@ -93,10 +93,10 @@ public class Controller extends JFrame {
 			Date a2 = context.getRange2();
 			
 			// If no start date specified, choose the beginning of the epoch
-			if(a1==null) { a1 = new Date(0); }
+			if(a1==null) { a1 = new Date(1000*60*60*24*365); }
 			
 			// If no end date specified, choose the end of time
-			if(a2==null) { a2 = new Date(Long.MAX_VALUE); }
+			if(a2==null) { a2 = new Date(Long.MAX_VALUE - 1000*60*60*24*365); }
 			
 			// Fix date range
 			changeToActivityLayout((a1.compareTo(a2) < 0)?a1:a2, (a1.compareTo(a2)<0)?a2:a1);
@@ -227,11 +227,8 @@ public class Controller extends JFrame {
 
 					// Concatenate file with 0s at the end from input2.csv to ensure there is a visible end to run object
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-					FileInputStream is1=new FileInputStream(fd.getDirectory() + "/" + fd.getFile());
-					File file = new File("../ActivityTracker/src/data/input2.csv");
-					FileInputStream is2=new FileInputStream(file);
-					SequenceInputStream is=new SequenceInputStream(is1, is2);
-					reader = new BufferedReader(new InputStreamReader(is, charset));
+					FileInputStream is=new FileInputStream(fd.getDirectory() + "/" + fd.getFile());
+					reader = new BufferedReader(new InputStreamReader(is));
 					// read the first line
 					String line = reader.readLine();
 					
