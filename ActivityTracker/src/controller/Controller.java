@@ -12,12 +12,15 @@ import java.io.SequenceInputStream;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import model.Activity;
 import model.User;
@@ -54,6 +57,8 @@ public class Controller extends JFrame {
 	 * Constructor for the GUI
 	 */
 	public Controller() {
+		setTitle("Catch-up! Standard Edition");
+		setResizable(false);
 		initializeFields();
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -341,7 +346,15 @@ public class Controller extends JFrame {
 			totalPace = totalPace + Double.valueOf(rowData[5]);
 			totalCaloriesBurned = totalCaloriesBurned + Double.valueOf(rowData[6]);
 			numberOfLines++;
-			dm.addRow(rowData);
+			
+			// Create a vector consisting of the proper data types for the JTable
+			Vector k = new Vector();
+			
+			k.add(rowData[0]);
+			
+			for(int i=1; i<7; i++)
+				k.add(Double.valueOf(rowData[i]));
+			dm.addRow(k);
 		}
 		// calculate the average results for the statistics
 		averageTime = totalTime /numberOfLines;
