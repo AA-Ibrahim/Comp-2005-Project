@@ -195,6 +195,7 @@ public class Controller extends JFrame {
 				// Login is successful
 				userDetails.setUser(u);
 				status.setStatus("Login successful");
+				userRegistration.clearFields();
 				changeToActivityLayout(null, null);
 			}
 

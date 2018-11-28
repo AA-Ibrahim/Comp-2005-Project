@@ -41,6 +41,10 @@ public class UserRegistrationPanel extends javax.swing.JPanel {
     public void clearFields() {
 		jtfUsername.setText("");
 		jtfPassword.setText("");	
+		jtfBirthday.setText("");
+		jtfEmail.setText("");
+		jtfFirstname.setText("");
+		jtfLastname.setText("");
 	}
 	
     public String getFirstName() {
