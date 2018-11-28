@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.SequenceInputStream;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -219,7 +220,7 @@ public class Controller extends JFrame {
 				// read the file
 				BufferedReader reader;
 				try {
-					// initalize variables
+					//initalize variables
 					Charset charset = Charset.forName("UTF-8");
 					User u = userDetails.getUser();
 					String userid = u.getId(), activityType = "run", sdate = "";
@@ -263,14 +264,14 @@ public class Controller extends JFrame {
 							ddate = sdf.parse(sdate);
 							date = ddate.getTime();
 							pace = Math.round(100.0*distance/time)/100.0;
-							calories = 80.0*distance;
+							calories = Math.round(80.0*distance)/1000.0;
 							// calculate altitude difference
 							altitudeDifference = altitude - altitudePast;
 							
 							if (altitudeDifference >= 0) {
-								altitudeGain += altitudeDifference;
+								altitudeGain += Math.round(100.0*altitudeDifference)/100.0;
 							} else {
-								altitudeLoss += altitudeDifference;
+								altitudeLoss += Math.round(100.0*altitudeDifference)/100.0;
 							}
 							altitudePast = altitude;
 						}
@@ -354,7 +355,7 @@ public class Controller extends JFrame {
 			k.add(rowData[0]);
 			
 			for(int i=1; i<7; i++)
-				k.add(Double.valueOf(rowData[i]));
+				k.add(Math.round(100.0*Double.valueOf(rowData[i]))/100.0);
 			dm.addRow(k);
 		}
 		// calculate the average results for the statistics
@@ -366,12 +367,14 @@ public class Controller extends JFrame {
 		averageCaloriesBurned = totalCaloriesBurned/numberOfLines;
 		
 		// add the values to statistics data
-		statistics = "Avg Time = " + (double) Math.round(100.0*averageTime)/100.0 
-				+ ", Avg Dist = " + (double) Math.round(100.0*averageDistance)/100.0
-				+ ", Avg Alt Gain = " + (double) Math.round(100.0*averageAltitudeGain)/100.0
-				+ ", Avg Alt Loss = " + (double) Math.round(100.0*averageAltitudeLoss)/100.0
-				+ ", Avg Pace = " + (double) Math.round(100.0*averagePace)/100.0
-				+ ", Avg Cal = " + (double) Math.round(100.0*averageCaloriesBurned)/100.0;
+		DecimalFormat df = new DecimalFormat("###.##");
+		
+		statistics = "Avg Time = " + df.format(averageTime) 
+				+ ", Avg Dist = " + df.format(averageDistance)
+				+ ", Avg Alt Gain = " + df.format(averageAltitudeGain)
+				+ ", Avg Alt Loss = " + df.format(averageAltitudeLoss)
+				+ ", Avg Pace = " + df.format(averagePace)
+				+ ", Avg Cal = " + df.format(averageCaloriesBurned);
 		
 		// update values to table and refresh
 		activityData.setJTable(jtActivity);

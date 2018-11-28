@@ -36,7 +36,7 @@ public class ActivityPanel extends javax.swing.JPanel {
 
 		// sorting fix
 		DefaultTableModel tableModel = new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null }, },
-				new String[] { "Date", "Time", "Distance", "Alt. Gain", "Alt. Loss", "Pace", "Calories" }) {
+				new String[] { "Date", "Time(min)", "Distance(m)", "Alt. Gain(m)", "Alt. Loss(m)", "Pace(m/min)", "Calories(kcal)" }) {
 			@Override
 			public Class getColumnClass(int column) {
 				switch (column) {

@@ -44,7 +44,7 @@ public class UserDetailsPanel extends javax.swing.JPanel {
 
 		jLabel7.setText("not logged in");
 
-		jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/resources/user.jpg"))); // NOI18N
+		jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/resources/shoe.jpg"))); // NOI18N
 
 		jbMyActivity.setText("My Activity");
 		jbMyActivity.setEnabled(false);

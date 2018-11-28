@@ -53,7 +53,7 @@ public class MyDevicesPanel extends javax.swing.JPanel {
 
 		jLabel2.setText("Garmin Monitor");
 
-		jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/resources/hrmon.jpeg"))); // NOI18N
+		jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/resources/bit.jpg"))); // NOI18N
 		jButton7.setText("jButton6");
 		jButton7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		jButton7.setBorderPainted(false);

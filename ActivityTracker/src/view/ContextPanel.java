@@ -94,6 +94,7 @@ public class ContextPanel extends javax.swing.JPanel {
 		clear.addActionListener(ae -> {
 			model.setValue(null);
 			model2.setValue(null);
+			jcb.setSelectedIndex(0);
 			ok.doClick();
 		});
 		jPanel1.add(clear);
