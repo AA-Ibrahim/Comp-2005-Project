@@ -263,7 +263,7 @@ public class Controller extends JFrame {
 							sdate = words[3];
 							ddate = sdf.parse(sdate);
 							date = ddate.getTime();
-							pace = Math.round(100.0*distance/time)/100.0;
+							pace = Math.round(100000.0*time/distance)/100.0;
 							calories = Math.round(80.0*distance)/1000.0;
 							// calculate altitude difference
 							altitudeDifference = altitude - altitudePast;
